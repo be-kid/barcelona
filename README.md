@@ -67,3 +67,7 @@ public/index.html            # 클릭해서 쓰는 플래너
 - [`docs/itinerary.schema.json`](docs/itinerary.schema.json) — 일정 스키마
 
 **결과만 띄우기**면 AI 연동 불필요. **웹에서 대화 편집**할 때만 OpenAI(채팅 API)를 붙이면 됩니다. Cursor SDK는 이 제품 채팅용으로 쓰지 않습니다.
+
+### 둘이서 AI 대화까지
+Supabase(Edge Function + DB + Realtime) 설계: [`docs/supabase-design.md`](docs/supabase-design.md)  
+SQL 초안: `supabase/migrations/001_init.sql`

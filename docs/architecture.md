@@ -267,11 +267,13 @@ Cursor SDK는 **이 제품의 채팅 백엔드로 쓰지 않는다.**
 목표 확장:
 ```
 site/                        # Phase A: 같이 보기 (지금)
-api/chat                     # Phase B: OpenAI 세부 편집 (나중)
+supabase/                    # Phase B: DB + Realtime + chat-ai
+  migrations/
+  functions/chat-ai/
 ```
 
-같이 **보기만** 하면 Pages URL이면 충분.  
-같이 **실시간으로 고치려면** 나중에 DB가 필요하고, 호스팅 자체는 여전히 무료 티어로 가능.
+- 같이 **보기만** → Pages URL  
+- 둘 다 **AI 대화 + 일정 동기화** → Supabase 설계 문서: [`docs/supabase-design.md`](supabase-design.md)
 
 ---
 
