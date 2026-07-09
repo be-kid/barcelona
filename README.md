@@ -1,34 +1,42 @@
 # 바르셀로나 4박 5일 맵 플래너
 
-대화로 짠 여행 일정을 **날짜별로 나눠** 구글맵에 바로 찍을 수 있게 만든 저장소입니다.
+대화로 짠 여행 일정을 **날짜별로 나눠** 구글맵에 바로 찍을 수 있게 만든 저장소입니다.  
+여자친구와 **같은 링크**로 보려면 `site/`를 **GitHub Pages(무료)** 로 배포하면 됩니다.
 
-구글 계정으로 지도를 “대신 저장”하진 못하지만, 아래처럼 **동선 링크**와 **My Maps 가져오기 파일**을 자동 생성합니다.
+## 같이 보기 (가성비 1순위)
+
+| 방법 | 비용 | 설명 |
+|------|------|------|
+| **GitHub Pages** | **무료** | `site/` 배포 → URL 공유. [설정 방법](docs/deploy.md) |
+| My Maps CSV/KML | 무료 | 구글 계정에 핀 저장 |
+| 실시간 공동 편집 | 추후 | Firebase 등 필요할 때만 |
+
+로컬에서 공유 페이지 미리보기:
+
+```bash
+python3 scripts/sync_site.py
+python3 -m http.server 8080 --directory site
+# http://localhost:8080
+```
 
 ## 바로 쓰기
 
 | 방법 | 설명 |
 |------|------|
-| **동선 링크** | `itinerary/README.md` 또는 `public/index.html`에서 Day별 「동선 열기」 |
-| **My Maps 핀** | [mymaps.google.com](https://www.google.com/mymaps) → 새 지도 → 가져오기 → `maps/dayN.csv` 또는 `.kml` |
-| **전체 한 파일** | `maps/barcelona-all-days.kml` / `.csv` |
+| **공유 페이지** | `site/` — 왼쪽 일정 · 오른쪽(데스크톱) 지도 |
+| **동선 링크** | `itinerary/README.md`에서 Day별 「동선 열기」 |
+| **My Maps 핀** | [mymaps.google.com](https://www.google.com/mymaps) → 가져오기 → `maps/dayN.csv` |
 
-로컬에서 플래너 UI:
+## 일정 수정 후 맵·사이트 갱신
 
-```bash
-python3 -m http.server 8080 --directory .
-# http://localhost:8080/public/
-```
-
-## 일정 수정 후 맵 다시 찍기
-
-1. `data/itinerary.json`에서 스팟·순서·메모 수정  
-2. 생성 스크립트 실행:
+1. `data/itinerary.json`에서 숙소·스팟 수정  
+2. 실행:
 
 ```bash
-python3 scripts/generate_maps.py
+python3 scripts/sync_site.py
 ```
 
-3. `maps/`, `itinerary/`, `data/itinerary.enriched.json`이 갱신됩니다.
+3. `site/`, `maps/`, `itinerary/`가 갱신됩니다. `main`에 푸시하면 Pages가 자동 배포됩니다.
 
 ## 폴더 구조
 

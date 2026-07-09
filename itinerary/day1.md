@@ -34,7 +34,7 @@
    보른 지구. 저녁 식사 추천 구역.  
    [지도에서 보기](https://www.google.com/maps/search/?api=1&query=Santa%20Maria%20del%20Mar%20Barcelona)
 
-7. **바르셀로네타 해변** — 일몰 · 60분  
+7. **바르셀로네타 해변** *(선택)* — 일몰 · 60분  
    해질녘 산책. 피곤하면 보른에서 마무리해도 OK.  
    [지도에서 보기](https://www.google.com/maps/search/?api=1&query=Barceloneta%20Beach%20Barcelona)
 

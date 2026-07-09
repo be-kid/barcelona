@@ -3,10 +3,28 @@
   "city": "Barcelona",
   "nights": 4,
   "days": 5,
+  "share": {
+    "note": "링크만 있으면 같이 볼 수 있어요. 수정은 배포된 내용을 갱신할 때 반영됩니다."
+  },
+  "stay": {
+    "name": "숙소 (보른·고딕 인근)",
+    "name_en": "Stay · El Born / Gothic area",
+    "address": "정확한 호텔명·주소는 알려주시면 고정 핀으로 바꿉니다",
+    "lat": 41.3852,
+    "lng": 2.1824,
+    "locked": true,
+    "note": "구시가지 기준 동선. 에이샴플레 숙소면 좌표만 교체하면 됩니다."
+  },
+  "constraints": [
+    "숙소 위치는 locked — 임의 변경 금지",
+    "사그라다 파밀리아·파크 구엘은 사전 예약 전제",
+    "하루 핵심 스팟은 과하지 않게 유지"
+  ],
   "assumptions": {
-    "base": "구시가지(고딕/보른) 또는 에이샴플레 숙소 기준",
+    "base": "구시가지(고딕/보른) 숙소 기준 (좌표는 플레이스홀더)",
     "pace": "도보 + 메트로 위주, 하루 핵심 스팟 3~5곳",
-    "tickets": "사그라다 파밀리아·파크 구엘은 사전 예약 권장"
+    "tickets": "사그라다 파밀리아·파크 구엘은 사전 예약 권장",
+    "companions": "둘이서 같은 페이지로 보며 일정 확인"
   },
   "days_plan": [
     {
@@ -15,6 +33,7 @@
       "label": "Day 1",
       "title": "도착 · 구시가지 워킹",
       "theme": "고딕 지구 · 람블라스 · 보른",
+      "locked": true,
       "summary": "도착 후 짐을 풀고, 바르셀로나의 옛 골목과 시장·항구를 천천히 익히는 날.",
       "tips": [
         "도착 시간에 따라 보케리아·바르셀로네타를 줄여도 됩니다.",
@@ -22,26 +41,33 @@
       ],
       "places": [
         {
+          "id": "d1_catalunya",
           "order": 1,
           "name": "플라사 카탈루냐",
           "name_en": "Plaça de Catalunya",
-          "lat": 41.3870,
+          "lat": 41.387,
           "lng": 2.1701,
           "time": "오후",
           "duration": "30분",
-          "note": "시내 중심. 메트로·버스 환승 허브."
+          "note": "시내 중심. 메트로·버스 환승 허브.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d1_rambla",
           "order": 2,
           "name": "람블라스 거리",
           "name_en": "La Rambla",
-          "lat": 41.3810,
+          "lat": 41.381,
           "lng": 2.1733,
           "time": "오후",
           "duration": "40분",
-          "note": "산책용. 너무 오래 머물지 말고 골목으로 빠지세요."
+          "note": "산책용. 너무 오래 머물지 말고 골목으로 빠지세요.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d1_boqueria",
           "order": 3,
           "name": "보케리아 시장",
           "name_en": "La Boqueria",
@@ -49,19 +75,25 @@
           "lng": 2.1716,
           "time": "오후",
           "duration": "45분",
-          "note": "과일·주스·타파스. 점심 겸 가볍게."
+          "note": "과일·주스·타파스. 점심 겸 가볍게.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d1_cathedral",
           "order": 4,
           "name": "바르셀로나 대성당",
           "name_en": "Barcelona Cathedral",
-          "lat": 41.3840,
+          "lat": 41.384,
           "lng": 2.1762,
           "time": "오후",
           "duration": "45분",
-          "note": "고딕 지구 입구. 주변 골목 산책."
+          "note": "고딕 지구 입구. 주변 골목 산책.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d1_reial",
           "order": 5,
           "name": "플라사 레이알",
           "name_en": "Plaça Reial",
@@ -69,9 +101,12 @@
           "lng": 2.1753,
           "time": "저녁 전",
           "duration": "20분",
-          "note": "가우디 가로등이 있는 광장."
+          "note": "가우디 가로등이 있는 광장.",
+          "locked": false,
+          "source": "imported"
         },
         {
+          "id": "d1_santamaría",
           "order": 6,
           "name": "산타 마리아 델 마르",
           "name_en": "Santa Maria del Mar",
@@ -79,9 +114,12 @@
           "lng": 2.1821,
           "time": "저녁",
           "duration": "30분",
-          "note": "보른 지구. 저녁 식사 추천 구역."
+          "note": "보른 지구. 저녁 식사 추천 구역.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d1_barceloneta",
           "order": 7,
           "name": "바르셀로네타 해변",
           "name_en": "Barceloneta Beach",
@@ -89,7 +127,10 @@
           "lng": 2.1925,
           "time": "일몰",
           "duration": "60분",
-          "note": "해질녘 산책. 피곤하면 보른에서 마무리해도 OK."
+          "note": "해질녘 산책. 피곤하면 보른에서 마무리해도 OK.",
+          "locked": false,
+          "optional": true,
+          "source": "imported"
         }
       ]
     },
@@ -99,6 +140,7 @@
       "label": "Day 2",
       "title": "가우디 핵심 루트",
       "theme": "사그라다 · 산트파우 · 에이샴플레",
+      "locked": true,
       "summary": "바르셀로나의 상징인 가우디 건축을 오전~오후로 압축한 핵심 데이.",
       "tips": [
         "사그라다 파밀리아는 오전 타임슬롯 예약 필수.",
@@ -106,6 +148,7 @@
       ],
       "places": [
         {
+          "id": "d2_sagrada",
           "order": 1,
           "name": "사그라다 파밀리아",
           "name_en": "Sagrada Família",
@@ -113,9 +156,12 @@
           "lng": 2.1744,
           "time": "오전 09:30",
           "duration": "2시간",
-          "note": "타워 입장권이면 더 좋음. 정문 사진 포인트 확보."
+          "note": "타워 입장권이면 더 좋음. 정문 사진 포인트 확보.",
+          "locked": true,
+          "source": "user_booking"
         },
         {
+          "id": "d2_santpau",
           "order": 2,
           "name": "산트파우 병원",
           "name_en": "Recinte Modernista de Sant Pau",
@@ -123,9 +169,12 @@
           "lng": 2.1745,
           "time": "오전~점심",
           "duration": "90분",
-          "note": "사그라다에서 도보 15분. 한적하고 사진 좋음."
+          "note": "사그라다에서 도보 15분. 한적하고 사진 좋음.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d2_batllo",
           "order": 3,
           "name": "카사 바트요",
           "name_en": "Casa Batlló",
@@ -133,9 +182,12 @@
           "lng": 2.1649,
           "time": "오후",
           "duration": "45분",
-          "note": "파세이그 데 그라시아. 외관 감상 또는 내부 투어."
+          "note": "파세이그 데 그라시아. 외관 감상 또는 내부 투어.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d2_mila",
           "order": 4,
           "name": "카사 밀라 (라 페드레라)",
           "name_en": "Casa Milà / La Pedrera",
@@ -143,17 +195,22 @@
           "lng": 2.1619,
           "time": "오후",
           "duration": "60분",
-          "note": "옥상 굴뚝이 포인트. 바트요와 가까운 동선."
+          "note": "옥상 굴뚝이 포인트. 바트요와 가까운 동선.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d2_passeig",
           "order": 5,
           "name": "파세이그 데 그라시아",
           "name_en": "Passeig de Gràcia",
-          "lat": 41.3910,
+          "lat": 41.391,
           "lng": 2.1648,
           "time": "저녁",
           "duration": "40분",
-          "note": "쇼핑·카페. 저녁은 에이샴플레 또는 그라시아로."
+          "note": "쇼핑·카페. 저녁은 에이샴플레 또는 그라시아로.",
+          "locked": false,
+          "source": "imported"
         }
       ]
     },
@@ -163,6 +220,7 @@
       "label": "Day 3",
       "title": "언덕 위 전망 데이",
       "theme": "파크 구엘 · 그라시아 · 벙커스",
+      "locked": true,
       "summary": "가우디 공원과 시내 전망을 한 번에. 오르막이 있으니 편한 신발을.",
       "tips": [
         "파크 구엘 기념물 구역(Monumental Zone) 예약 필수.",
@@ -170,6 +228,7 @@
       ],
       "places": [
         {
+          "id": "d3_guell",
           "order": 1,
           "name": "파크 구엘",
           "name_en": "Park Güell",
@@ -177,19 +236,25 @@
           "lng": 2.1527,
           "time": "오전 09:00",
           "duration": "2시간",
-          "note": "모자이크 도마뱀·전망 테라스. 오전 슬롯이 한산."
+          "note": "모자이크 도마뱀·전망 테라스. 오전 슬롯이 한산.",
+          "locked": true,
+          "source": "user_booking"
         },
         {
+          "id": "d3_gracia",
           "order": 2,
           "name": "그라시아 지구",
           "name_en": "Gràcia",
           "lat": 41.4036,
-          "lng": 2.1580,
+          "lng": 2.158,
           "time": "점심",
           "duration": "90분",
-          "note": "플라사 델 솔 등에서 현지인 분위기 점심."
+          "note": "플라사 델 솔 등에서 현지인 분위기 점심.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d3_vicens",
           "order": 3,
           "name": "카사 비센스",
           "name_en": "Casa Vicens",
@@ -198,9 +263,12 @@
           "time": "오후",
           "duration": "60분",
           "note": "가우디 초기작. 시간이 없으면 패스 가능.",
-          "optional": true
+          "locked": false,
+          "optional": true,
+          "source": "imported"
         },
         {
+          "id": "d3_bunkers",
           "order": 4,
           "name": "벙커스 델 카르멜",
           "name_en": "Bunkers del Carmel",
@@ -208,7 +276,9 @@
           "lng": 2.1608,
           "time": "일몰",
           "duration": "90분",
-          "note": "시내 최고 전망 중 하나. 물·모자 챙기기."
+          "note": "시내 최고 전망 중 하나. 물·모자 챙기기.",
+          "locked": true,
+          "source": "user_fixed"
         }
       ]
     },
@@ -218,6 +288,7 @@
       "label": "Day 4",
       "title": "몬주익 · 항구",
       "theme": "성채 · 미술관 · 매직 분수",
+      "locked": true,
       "summary": "언덕·미술관·항구를 잇는 여유 있는 하루. 케이블카 옵션 있음.",
       "tips": [
         "매직 분수 쇼 시간은 시즌마다 다름. 당일 확인.",
@@ -225,6 +296,7 @@
       ],
       "places": [
         {
+          "id": "d4_castell",
           "order": 1,
           "name": "몬주익 성",
           "name_en": "Castell de Montjuïc",
@@ -232,9 +304,12 @@
           "lng": 2.1651,
           "time": "오전",
           "duration": "90분",
-          "note": "항구·시내 전망. 케이블카로 올라가도 좋음."
+          "note": "항구·시내 전망. 케이블카로 올라가도 좋음.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d4_miro",
           "order": 2,
           "name": "미로 미술관",
           "name_en": "Fundació Joan Miró",
@@ -243,9 +318,12 @@
           "time": "오전~점심",
           "duration": "75분",
           "note": "취향이면 방문. 아니면 MNAC로 바로 이동.",
-          "optional": true
+          "locked": false,
+          "optional": true,
+          "source": "imported"
         },
         {
+          "id": "d4_mnac",
           "order": 3,
           "name": "카탈루냐 국립미술관 (MNAC)",
           "name_en": "MNAC",
@@ -253,9 +331,12 @@
           "lng": 2.1535,
           "time": "오후",
           "duration": "90분",
-          "note": "건물 계단 전망만 봐도 가치 있음."
+          "note": "건물 계단 전망만 봐도 가치 있음.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d4_magic",
           "order": 4,
           "name": "스페인 광장 · 매직 분수",
           "name_en": "Magic Fountain of Montjuïc",
@@ -263,9 +344,12 @@
           "lng": 2.1516,
           "time": "저녁",
           "duration": "45분",
-          "note": "분수 쇼가 있으면 저녁에 맞춰 대기."
+          "note": "분수 쇼가 있으면 저녁에 맞춰 대기.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d4_portvell",
           "order": 5,
           "name": "포트 벨",
           "name_en": "Port Vell",
@@ -273,7 +357,9 @@
           "lng": 2.1778,
           "time": "밤",
           "duration": "60분",
-          "note": "항구 산책·저녁 식사. 마레마그눔 쪽."
+          "note": "항구 산책·저녁 식사. 마레마그눔 쪽.",
+          "locked": false,
+          "source": "imported"
         }
       ]
     },
@@ -283,6 +369,7 @@
       "label": "Day 5",
       "title": "여유 · 출국",
       "theme": "취향 스팟 · 쇼핑 · 공항",
+      "locked": true,
       "summary": "비행 시간에 맞춰 가볍게. 못 간 곳 보완하거나 쇼핑으로 마무리.",
       "travelmode": "walking",
       "tips": [
@@ -291,6 +378,7 @@
       ],
       "places": [
         {
+          "id": "d5_picasso",
           "order": 1,
           "name": "피카소 미술관",
           "name_en": "Museu Picasso",
@@ -298,9 +386,12 @@
           "lng": 2.1809,
           "time": "오전",
           "duration": "90분",
-          "note": "보른에 있음. 사전 예약 권장."
+          "note": "보른에 있음. 사전 예약 권장.",
+          "locked": true,
+          "source": "user_fixed"
         },
         {
+          "id": "d5_born",
           "order": 2,
           "name": "엘 보른 문화센터",
           "name_en": "El Born Centre de Cultura",
@@ -308,19 +399,25 @@
           "lng": 2.1836,
           "time": "오전",
           "duration": "40분",
-          "note": "유적 보존 공간. 가볍게 둘러보기."
+          "note": "유적 보존 공간. 가볍게 둘러보기.",
+          "locked": false,
+          "source": "imported"
         },
         {
+          "id": "d5_shopping",
           "order": 3,
           "name": "엘 코르테 잉글레스 / 쇼핑",
           "name_en": "El Corte Inglés Catalunya",
           "lat": 41.3866,
-          "lng": 2.1700,
+          "lng": 2.17,
           "time": "점심 전",
           "duration": "60분",
-          "note": "기념품·필수품. 비행 시간에 맞게 축소."
+          "note": "기념품·필수품. 비행 시간에 맞게 축소.",
+          "locked": false,
+          "source": "imported"
         },
         {
+          "id": "d5_airport",
           "order": 4,
           "name": "바르셀로나 엘프라트 공항",
           "name_en": "Barcelona El Prat Airport (BCN)",
@@ -329,7 +426,9 @@
           "time": "출국",
           "duration": "-",
           "note": "터미널·항공사 확인 후 이동. 동선 링크에는 포함하지 않음(대중교통/택시).",
-          "exclude_from_route": true
+          "locked": true,
+          "exclude_from_route": true,
+          "source": "user_fixed"
         }
       ]
     }

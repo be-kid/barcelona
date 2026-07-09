@@ -259,22 +259,19 @@ Cursor SDK는 **이 제품의 채팅 백엔드로 쓰지 않는다.**
 ## 9. 이 레포와의 연결
 
 현재:
-- `data/itinerary.json` — 뼈대+스팟
-- `scripts/generate_maps.py` — 동선 URL / CSV / KML
-- `public/index.html` — 정적 플래너
+- `data/itinerary.json` — 숙소(locked) + Day 뼈대 + 스팟
+- `site/` — **공유용** 지도+일정 페이지 (GitHub Pages)
+- `scripts/sync_site.py` — 일정 → site/data + maps
+- `docs/deploy.md` — 배포·공유 가성비 가이드
 
-목표 구조:
+목표 확장:
 ```
-data/itinerary.json          # locked 뼈대 포함으로 확장
-docs/architecture.md         # 이 문서
-docs/itinerary.schema.json   # 스키마
-apps/web/                    # (Phase A/B) 지도+패널/채팅
-  components/MapView
-  components/ChatPanel
-  lib/itineraryStore
-api/chat                     # Phase B
-scripts/generate_maps.py     # export 유지
+site/                        # Phase A: 같이 보기 (지금)
+api/chat                     # Phase B: OpenAI 세부 편집 (나중)
 ```
+
+같이 **보기만** 하면 Pages URL이면 충분.  
+같이 **실시간으로 고치려면** 나중에 DB가 필요하고, 호스팅 자체는 여전히 무료 티어로 가능.
 
 ---
 

@@ -23,7 +23,8 @@ def maps_search_url(place: dict) -> str:
 
 def maps_place_url(place: dict) -> str:
     # Reliable pin: search by coordinates + name
-    query = urllib.parse.quote(f"{place['name_en']} Barcelona")
+    name = place.get("name_en") or place.get("name") or "Barcelona"
+    query = urllib.parse.quote(f"{name} Barcelona")
     return f"https://www.google.com/maps/search/?api=1&query={query}"
 
 
