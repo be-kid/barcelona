@@ -49,3 +49,13 @@ public/index.html            # 클릭해서 쓰는 플래너
 5. 여유 · 쇼핑 · 출국  
 
 대화로 일정을 바꾸면 같은 방식으로 맵 파일을 다시 뽑아 드리면 됩니다.
+
+## 다음 단계: 웹(지도+채팅) 구조
+
+숙소·큰 일정은 고정하고, 웹에서는 세부만 대화로 채우는 설계는 아래에 정리해 두었습니다.
+
+- [`docs/architecture.md`](docs/architecture.md) — 전체 구조 (지도 | 채팅, locked vs draft)
+- [`docs/ai-role.md`](docs/ai-role.md) — OpenAI 역할·비용
+- [`docs/itinerary.schema.json`](docs/itinerary.schema.json) — 일정 스키마
+
+**결과만 띄우기**면 AI 연동 불필요. **웹에서 대화 편집**할 때만 OpenAI(채팅 API)를 붙이면 됩니다. Cursor SDK는 이 제품 채팅용으로 쓰지 않습니다.

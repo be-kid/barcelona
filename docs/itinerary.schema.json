@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/be-kid/barcelona/docs/itinerary.schema.json",
+  "title": "BarcelonaItinerary",
+  "description": "잠금(locked) 뼈대 + AI가 채우는 draft 슬롯을 구분하는 여행 일정 스키마",
+  "type": "object",
+  "required": ["meta", "stay", "days"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["title", "city", "nights", "days"],
+      "properties": {
+        "title": { "type": "string" },
+        "city": { "type": "string" },
+        "nights": { "type": "integer", "minimum": 1 },
+        "days": { "type": "integer", "minimum": 1 },
+        "locale": { "type": "string", "default": "ko" }
+      }
+    },
+    "stay": {
+      "type": "object",
+      "required": ["name", "lat", "lng", "locked"],
+      "properties": {
+        "name": { "type": "string" },
+        "address": { "type": "string" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "locked": { "type": "boolean", "const": true },
+        "check_in": { "type": "string" },
+        "check_out": { "type": "string" }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "AI가 반드시 지켜야 할 자연어 제약"
+    },
+    "days": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/day" }
+    }
+  },
+  "$defs": {
+    "day": {
+      "type": "object",
+      "required": ["id", "day", "title", "places"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^day[0-9]+$" },
+        "day": { "type": "integer", "minimum": 1 },
+        "label": { "type": "string" },
+        "title": { "type": "string" },
+        "theme": { "type": "string" },
+        "summary": { "type": "string" },
+        "locked": {
+          "type": "boolean",
+          "description": "true면 title/theme을 AI가 바꾸지 못함"
+        },
+        "tips": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "places": {
+          "type": "array",
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/place" }
+        }
+      }
+    },
+    "place": {
+      "type": "object",
+      "required": ["id", "locked"],
+      "properties": {
+        "id": { "type": "string" },
+        "order": { "type": "integer", "minimum": 1 },
+        "name": { "type": ["string", "null"] },
+        "name_en": { "type": ["string", "null"] },
+        "lat": { "type": ["number", "null"] },
+        "lng": { "type": ["number", "null"] },
+        "time": { "type": ["string", "null"] },
+        "duration": { "type": ["string", "null"] },
+        "note": { "type": ["string", "null"] },
+        "slot": {
+          "type": "string",
+          "enum": [
+            "morning",
+            "lunch",
+            "afternoon",
+            "cafe",
+            "dinner",
+            "sunset",
+            "between",
+            "custom"
+          ]
+        },
+        "locked": { "type": "boolean" },
+        "optional": { "type": "boolean" },
+        "exclude_from_route": { "type": "boolean" },
+        "source": {
+          "type": "string",
+          "enum": ["user_booking", "user_fixed", "ai_fill", "imported"]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "locked": { "const": true } } },
+          "then": {
+            "required": ["name", "lat", "lng"]
+          }
+        }
+      ]
+    },
+    "chatResponse": {
+      "type": "object",
+      "required": ["assistant_message", "patch"],
+      "properties": {
+        "assistant_message": { "type": "string" },
+        "patch": {
+          "type": "array",
+          "description": "RFC6902-style JSON Patch. locked 경로는 서버가 거부"
+        },
+        "diff_summary": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "needs_clarification": { "type": "boolean" }
+      }
+    }
+  }
+}
