@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Barcelona trip</name>
+    <Folder>
+      <name>Day 1 · 8/31 · 도착 · 에이샴플레 저녁</name>
+      <Placemark>
+        <name>1. 바르셀로나 엘프라트 공항</name>
+        <description>19:00 도착 · -
+현지 시간 기준 대략 저녁 7시 도착.</description>
+        <Point><coordinates>2.0833,41.2974,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>2. 숙소 체크인</name>
+        <description>밤 · -
+짐 풀고 휴식. Day2 아침 투어 준비.</description>
+        <Point><coordinates>2.1578355,41.3921707,0</coordinates></Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Day 2 · 9/1 · 가우디 투어 · 사그라다 내부</name>
+      <Placemark>
+        <name>1. 카사 바트요</name>
+        <description>07:50 투어 시작 · 투어 포함
+가우디 투어 1번째. 동선 확정.</description>
+        <Point><coordinates>2.1649,41.3916,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>2. 카사 밀라 (라 페드레라)</name>
+        <description>투어 중 · 투어 포함
+가우디 투어 2번째. 숙소(프로벤사)와 매우 가까움.</description>
+        <Point><coordinates>2.1619,41.3954,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>3. 구엘 공원</name>
+        <description>투어 중 · 투어 포함
+가우디 투어 3번째.</description>
+        <Point><coordinates>2.1527,41.4145,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>4. 카사 비센스</name>
+        <description>투어 중 · 투어 포함
+가우디 투어 4번째.</description>
+        <Point><coordinates>2.1507,41.4035,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>5. 사그라다 파밀리아 (투어)</name>
+        <description>~13:50 투어 종료 · 투어 포함
+가우디 투어 마지막. 07:50–13:50 구간 종료 지점.</description>
+        <Point><coordinates>2.1744,41.4036,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>7. 사그라다 파밀리아 내부 투어</name>
+        <description>16:00–17:00 · 1시간
+내부 입장 확정. 투어와 별도 예약.</description>
+        <Point><coordinates>2.1744,41.4036,0</coordinates></Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Day 3 · 9/2 · 미정</name>
+
+    </Folder>
+    <Folder>
+      <name>Day 4 · 9/3 · 미정</name>
+
+    </Folder>
+    <Folder>
+      <name>Day 5 · 9/4 · 미정</name>
+
+    </Folder>
+    <Folder>
+      <name>Day 6 · 9/5 · 출국</name>
+      <Placemark>
+        <name>2. 바르셀로나 엘프라트 공항</name>
+        <description>오후 출발 (시각 미정) · -
+정확한 출발 시각 업데이트 예정.</description>
+        <Point><coordinates>2.0833,41.2974,0</coordinates></Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

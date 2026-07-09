@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Day 2 · 9/1 · 가우디 투어 · 사그라다 내부</name>
+    <description>07:50–13:50 가우디 투어(카사 바트요 → 카사 밀라 → 구엘공원 → 카사 비센스 → 사그라다). 오후 16:00–17:00 사그라다 내부 투어.</description>
+    <Placemark>
+      <name>1. 카사 바트요</name>
+      <description>07:50 투어 시작 · 투어 포함
+가우디 투어 1번째. 동선 확정.</description>
+      <Point><coordinates>2.1649,41.3916,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>2. 카사 밀라 (라 페드레라)</name>
+      <description>투어 중 · 투어 포함
+가우디 투어 2번째. 숙소(프로벤사)와 매우 가까움.</description>
+      <Point><coordinates>2.1619,41.3954,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>3. 구엘 공원</name>
+      <description>투어 중 · 투어 포함
+가우디 투어 3번째.</description>
+      <Point><coordinates>2.1527,41.4145,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>4. 카사 비센스</name>
+      <description>투어 중 · 투어 포함
+가우디 투어 4번째.</description>
+      <Point><coordinates>2.1507,41.4035,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>5. 사그라다 파밀리아 (투어)</name>
+      <description>~13:50 투어 종료 · 투어 포함
+가우디 투어 마지막. 07:50–13:50 구간 종료 지점.</description>
+      <Point><coordinates>2.1744,41.4036,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>7. 사그라다 파밀리아 내부 투어</name>
+      <description>16:00–17:00 · 1시간
+내부 입장 확정. 투어와 별도 예약.</description>
+      <Point><coordinates>2.1744,41.4036,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>Day 2 · 9/1 route</name>
+      <Style>
+        <LineStyle><color>ff2a6fdb</color><width>4</width></LineStyle>
+      </Style>
+      <LineString>
+        <tessellate>1</tessellate>
+        <coordinates>2.1649,41.3916,0 2.1619,41.3954,0 2.1527,41.4145,0 2.1507,41.4035,0 2.1744,41.4036,0 2.1744,41.4036,0</coordinates>
+      </LineString>
+    </Placemark>
+  </Document>
+</kml>

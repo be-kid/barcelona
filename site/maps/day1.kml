@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Day 1 · 8/31 · 도착 · 에이샴플레 저녁</name>
+    <description>현지 저녁 7시쯤 공항 도착. 숙소 체크인 후 근처에서 가볍게 먹고 일찍 쉬는 날. (Day2 아침 투어 대비)</description>
+    <Placemark>
+      <name>1. 바르셀로나 엘프라트 공항</name>
+      <description>19:00 도착 · -
+현지 시간 기준 대략 저녁 7시 도착.</description>
+      <Point><coordinates>2.0833,41.2974,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>2. 숙소 체크인</name>
+      <description>밤 · -
+짐 풀고 휴식. Day2 아침 투어 준비.</description>
+      <Point><coordinates>2.1578355,41.3921707,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>Day 1 · 8/31 route</name>
+      <Style>
+        <LineStyle><color>ff2a6fdb</color><width>4</width></LineStyle>
+      </Style>
+      <LineString>
+        <tessellate>1</tessellate>
+        <coordinates>2.0833,41.2974,0 2.1578355,41.3921707,0</coordinates>
+      </LineString>
+    </Placemark>
+  </Document>
+</kml>

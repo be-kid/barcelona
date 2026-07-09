@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Day 6 · 9/5 · 출국</name>
+    <description>오후 출발 예정. 정확한 비행 시간은 확인 후 업데이트.</description>
+    <Placemark>
+      <name>2. 바르셀로나 엘프라트 공항</name>
+      <description>오후 출발 (시각 미정) · -
+정확한 출발 시각 업데이트 예정.</description>
+      <Point><coordinates>2.0833,41.2974,0</coordinates></Point>
+    </Placemark>
+
+  </Document>
+</kml>

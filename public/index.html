@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>바르셀로나 4박5일 · 맵 플래너</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1a2332;
+      --muted: #5a6578;
+      --sand: #f3efe6;
+      --sea: #1e6f8a;
+      --sea-deep: #0f4c5c;
+      --sun: #e8a54b;
+      --coral: #c45c3e;
+      --line: rgba(26, 35, 50, 0.12);
+      --card: rgba(255, 252, 247, 0.88);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Outfit", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #d8eef5 0%, transparent 55%),
+        radial-gradient(900px 500px at 100% 0%, #f7e0c4 0%, transparent 50%),
+        linear-gradient(180deg, #eef5f7 0%, var(--sand) 40%, #e8e2d6 100%);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      width: min(920px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    header.hero {
+      padding: 1.5rem 0 2rem;
+      animation: rise 0.7s ease both;
+    }
+
+    .brand {
+      font-family: "Fraunces", serif;
+      font-size: clamp(2.4rem, 7vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin: 0 0 0.75rem;
+      color: var(--sea-deep);
+    }
+
+    .lede {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 36rem;
+      line-height: 1.55;
+      margin: 0 0 1.25rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.7rem 1.05rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--sea);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--sea-deep); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--sea-deep);
+      border-color: var(--line);
+    }
+
+    .day-nav {
+      display: flex;
+      gap: 0.45rem;
+      overflow-x: auto;
+      padding: 0.25rem 0 1.25rem;
+      margin-bottom: 0.5rem;
+      scrollbar-width: none;
+      animation: rise 0.8s 0.1s ease both;
+    }
+    .day-nav::-webkit-scrollbar { display: none; }
+    .day-nav a {
+      flex: 0 0 auto;
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .day-nav a:hover { border-color: var(--sea); color: var(--sea-deep); }
+
+    .howto {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 1.1rem;
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 1.75rem;
+      animation: rise 0.85s 0.15s ease both;
+    }
+    .howto h2 {
+      font-family: "Fraunces", serif;
+      font-size: 1.15rem;
+      margin: 0 0 0.55rem;
+    }
+    .howto ol {
+      margin: 0;
+      padding-left: 1.2rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .howto code {
+      font-size: 0.85em;
+      background: rgba(30, 111, 138, 0.08);
+      padding: 0.1em 0.35em;
+      border-radius: 0.3em;
+    }
+
+    .day {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 1.25rem;
+      padding: 1.35rem 1.35rem 1.1rem;
+      margin-bottom: 1.25rem;
+      animation: rise 0.7s ease both;
+    }
+    .day:nth-child(1) { animation-delay: 0.05s; }
+    .day:nth-child(2) { animation-delay: 0.1s; }
+    .day:nth-child(3) { animation-delay: 0.15s; }
+    .day:nth-child(4) { animation-delay: 0.2s; }
+    .day:nth-child(5) { animation-delay: 0.25s; }
+
+    .day-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+    .day-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin: 0 0 0.2rem;
+    }
+    .day-title {
+      font-family: "Fraunces", serif;
+      font-size: 1.45rem;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+    .day-theme {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin: 0.35rem 0 0;
+    }
+    .day-summary {
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0 0 1rem;
+      font-size: 0.95rem;
+    }
+
+    .places { list-style: none; margin: 0; padding: 0; }
+    .place {
+      display: grid;
+      grid-template-columns: 2rem 1fr auto;
+      gap: 0.65rem;
+      align-items: start;
+      padding: 0.75rem 0;
+      border-top: 1px solid var(--line);
+    }
+    .num {
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 50%;
+      background: var(--sea);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: grid;
+      place-items: center;
+      margin-top: 0.1rem;
+    }
+    .place h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .meta {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0.15rem 0 0.25rem;
+    }
+    .note {
+      font-size: 0.88rem;
+      color: var(--ink);
+      opacity: 0.85;
+      margin: 0;
+      line-height: 1.4;
+    }
+    .opt {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--sun);
+      background: rgba(232, 165, 75, 0.15);
+      padding: 0.1rem 0.4rem;
+      border-radius: 0.3rem;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+    }
+    .pin {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--sea);
+      text-decoration: none;
+      white-space: nowrap;
+      padding-top: 0.25rem;
+    }
+    .pin:hover { text-decoration: underline; }
+
+    .tips {
+      margin: 0.85rem 0 0;
+      padding: 0.75rem 0.9rem;
+      background: rgba(30, 111, 138, 0.06);
+      border-radius: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .tips strong { color: var(--sea-deep); }
+    .tips ul { margin: 0.35rem 0 0; padding-left: 1.1rem; }
+
+    footer {
+      margin-top: 2rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 560px) {
+      .place { grid-template-columns: 2rem 1fr; }
+      .pin { grid-column: 2; padding-top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <p class="day-label">Barcelona · 4N / 5D</p>
+      <h1 class="brand">바르셀로나</h1>
+      <p class="lede">
+        대화로 짠 일정을 날짜별로 나눠, 구글맵 동선 링크와 My Maps 가져오기 파일로 바로 찍을 수 있게 해 둔 플래너입니다.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://www.google.com/mymaps" target="_blank" rel="noopener">My Maps 열기</a>
+        <a class="btn btn-ghost" href="../maps/barcelona-all-days.kml" download>전체 KML 받기</a>
+        <a class="btn btn-ghost" href="../maps/barcelona-all-days.csv" download>전체 CSV 받기</a>
+      </div>
+    </header>
+
+    <nav class="day-nav" id="day-nav" aria-label="날짜 이동"></nav>
+
+    <section class="howto">
+      <h2>구글맵에 핀 찍는 법</h2>
+      <ol>
+        <li><strong>빠른 방법:</strong> 각 Day의 「오늘 동선 열기」를 누르면 그날 스팟이 순서대로 찍힌 길찾기가 열립니다.</li>
+        <li><strong>지도에 저장:</strong> <a href="https://www.google.com/mymaps" target="_blank" rel="noopener">Google My Maps</a> → 새 지도 → 가져오기 → <code>maps/day1.csv</code> ~ <code>day5.csv</code> (또는 KML) 업로드.</li>
+        <li>날짜마다 레이어를 나누면 여행 중 그날만 켜고 다니기 좋습니다.</li>
+      </ol>
+    </section>
+
+    <main id="days"></main>
+
+    <footer>
+      일정은 <code>data/itinerary.json</code>을 고친 뒤 <code>python3 scripts/generate_maps.py</code>로 다시 생성하면 됩니다.
+    </footer>
+  </div>
+
+  <script>
+    async function load() {
+      const res = await fetch("../data/itinerary.enriched.json");
+      const data = await res.json();
+      const nav = document.getElementById("day-nav");
+      const root = document.getElementById("days");
+
+      data.days_plan.forEach((day) => {
+        const a = document.createElement("a");
+        a.href = `#${day.id}`;
+        a.textContent = day.label;
+        nav.appendChild(a);
+
+        const section = document.createElement("section");
+        section.className = "day";
+        section.id = day.id;
+
+        const places = day.places.map((p) => `
+          <li class="place">
+            <span class="num">${p.order}</span>
+            <div>
+              <h3>${p.name}${p.optional ? '<span class="opt">선택</span>' : ""}</h3>
+              <p class="meta">${p.time || ""} · ${p.duration || ""} · ${p.name_en}</p>
+              <p class="note">${p.note || ""}</p>
+            </div>
+            <a class="pin" href="${p.google_maps}" target="_blank" rel="noopener">핀</a>
+          </li>
+        `).join("");
+
+        const tips = (day.tips || []).map((t) => `<li>${t}</li>`).join("");
+
+        section.innerHTML = `
+          <div class="day-head">
+            <div>
+              <p class="day-label">${day.label}</p>
+              <h2 class="day-title">${day.title}</h2>
+              <p class="day-theme">${day.theme}</p>
+            </div>
+            <a class="btn btn-primary" href="${day.google_maps_directions}" target="_blank" rel="noopener">오늘 동선 열기</a>
+          </div>
+          <p class="day-summary">${day.summary}</p>
+          <ul class="places">${places}</ul>
+          ${tips ? `<div class="tips"><strong>팁</strong><ul>${tips}</ul></div>` : ""}
+          <div class="actions" style="margin-top:0.9rem">
+            <a class="btn btn-ghost" href="../maps/${day.id}.csv" download>${day.id}.csv</a>
+            <a class="btn btn-ghost" href="../maps/${day.id}.kml" download>${day.id}.kml</a>
+          </div>
+        `;
+        root.appendChild(section);
+      });
+    }
+    load().catch((e) => {
+      document.getElementById("days").innerHTML =
+        "<p>일정 데이터를 불러오지 못했습니다. <code>data/itinerary.enriched.json</code>을 확인하세요.</p>";
+      console.error(e);
+    });
+  </script>
+</body>
+</html>

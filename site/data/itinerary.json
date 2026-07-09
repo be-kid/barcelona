@@ -1,0 +1,333 @@
+{
+  "title": "바르셀로나 5박 6일",
+  "city": "Barcelona",
+  "nights": 5,
+  "days": 6,
+  "dates": {
+    "arrival": {
+      "date": "2026-08-31",
+      "time_local": "19:00",
+      "place": "Barcelona El Prat Airport (BCN)",
+      "note": "바르셀로나 현지 시간 기준 오후 7시쯤 도착"
+    },
+    "departure": {
+      "date": "2026-09-05",
+      "time_local": null,
+      "place": "Barcelona El Prat Airport (BCN)",
+      "note": "오후 출발 예정 — 정확한 시간은 확인 후 업데이트"
+    },
+    "timezone": "Europe/Madrid"
+  },
+  "share": {
+    "note": "확정된 것만 고정해 두었어요. 나머지 Day는 같이 채워 가면 됩니다."
+  },
+  "stay": {
+    "name": "숙소 · Carrer de Provença 205",
+    "name_en": "Carrer de Provença, 205, Barcelona",
+    "address": "Carrer de Provença, 205, 08008 Barcelona (Eixample)",
+    "lat": 41.3921707,
+    "lng": 2.1578355,
+    "locked": true,
+    "note": "에이샴플레. 카사 밀라·바트요·사그라다 접근 좋음.",
+    "google_maps": "https://www.google.com/maps/search/?api=1&query=Carrer%20de%20Proven%C3%A7a%2C%20205%2C%20Barcelona%20Barcelona"
+  },
+  "constraints": [
+    "숙소(Carrer de Provença 205)는 locked — 변경 금지",
+    "Day2 가우디 투어 07:50–13:50 동선·시간 locked",
+    "Day2 사그라다 내부 투어 16:00–17:00 locked",
+    "출국 시각은 미확정 — 확인 후 dates.departure 업데이트"
+  ],
+  "assumptions": {
+    "base": "Carrer de Provença 205 (에이샴플레) 숙소 기준",
+    "pace": "Day2는 투어로 빡셈. 나머지 날은 여유 있게 채울 예정",
+    "tickets": "Day2 가우디 투어·사그라다 내부는 예약 확정",
+    "companions": "둘이서 같은 페이지로 보며 일정 확인"
+  },
+  "days_plan": [
+    {
+      "id": "day1",
+      "day": 1,
+      "date": "2026-08-31",
+      "label": "Day 1 · 8/31",
+      "title": "도착 · 에이샴플레 저녁",
+      "theme": "공항 → 숙소 → 가벼운 저녁",
+      "locked": true,
+      "summary": "현지 저녁 7시쯤 공항 도착. 숙소 체크인 후 근처에서 가볍게 먹고 일찍 쉬는 날. (Day2 아침 투어 대비)",
+      "tips": [
+        "에어로버스(A1/A2) 또는 택시/우버로 숙소 이동.",
+        "내일 07:50 투어라 저녁은 과하지 않게.",
+        "저녁 식당·산책 코스는 아직 미정 — 나중에 채우기."
+      ],
+      "places": [
+        {
+          "id": "d1_airport",
+          "order": 1,
+          "name": "바르셀로나 엘프라트 공항",
+          "name_en": "Barcelona El Prat Airport (BCN)",
+          "lat": 41.2974,
+          "lng": 2.0833,
+          "time": "19:00 도착",
+          "duration": "-",
+          "note": "현지 시간 기준 대략 저녁 7시 도착.",
+          "locked": true,
+          "exclude_from_route": true,
+          "source": "user_fixed",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=Barcelona%20El%20Prat%20Airport%20%28BCN%29%20Barcelona"
+        },
+        {
+          "id": "d1_stay",
+          "order": 2,
+          "name": "숙소 체크인",
+          "name_en": "Carrer de Provença, 205",
+          "lat": 41.3921707,
+          "lng": 2.1578355,
+          "time": "밤",
+          "duration": "-",
+          "note": "짐 풀고 휴식. Day2 아침 투어 준비.",
+          "locked": true,
+          "source": "user_fixed",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=Carrer%20de%20Proven%C3%A7a%2C%20205%20Barcelona"
+        },
+        {
+          "id": "d1_dinner",
+          "order": 3,
+          "name": "저녁 (미정)",
+          "name_en": null,
+          "lat": null,
+          "lng": null,
+          "time": "저녁",
+          "duration": "60–90분",
+          "note": "숙소 근처 가벼운 식사. 대화로 채울 슬롯.",
+          "slot": "dinner",
+          "locked": false,
+          "source": "ai_fill",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=%EC%A0%80%EB%85%81%20%28%EB%AF%B8%EC%A0%95%29%20Barcelona"
+        }
+      ],
+      "google_maps_directions": "https://www.google.com/maps/search/?api=1&query=Carrer%20de%20Proven%C3%A7a%2C%20205%20Barcelona"
+    },
+    {
+      "id": "day2",
+      "day": 2,
+      "date": "2026-09-01",
+      "label": "Day 2 · 9/1",
+      "title": "가우디 투어 · 사그라다 내부",
+      "theme": "확정 투어 데이",
+      "locked": true,
+      "summary": "07:50–13:50 가우디 투어(카사 바트요 → 카사 밀라 → 구엘공원 → 카사 비센스 → 사그라다). 오후 16:00–17:00 사그라다 내부 투어.",
+      "tips": [
+        "아침 일찍 출발 — 숙소에서 카사 바트요까지 도보 가능권.",
+        "투어 종료(13:50) 후 ~16:00 사이 점심·휴식 슬롯은 미정.",
+        "내부 투어 후 저녁도 아직 미정."
+      ],
+      "places": [
+        {
+          "id": "d2_batllo",
+          "order": 1,
+          "name": "카사 바트요",
+          "name_en": "Casa Batlló",
+          "lat": 41.3916,
+          "lng": 2.1649,
+          "time": "07:50 투어 시작",
+          "duration": "투어 포함",
+          "note": "가우디 투어 1번째. 동선 확정.",
+          "locked": true,
+          "source": "user_booking",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=Casa%20Batll%C3%B3%20Barcelona"
+        },
+        {
+          "id": "d2_mila",
+          "order": 2,
+          "name": "카사 밀라 (라 페드레라)",
+          "name_en": "Casa Milà / La Pedrera",
+          "lat": 41.3954,
+          "lng": 2.1619,
+          "time": "투어 중",
+          "duration": "투어 포함",
+          "note": "가우디 투어 2번째. 숙소(프로벤사)와 매우 가까움.",
+          "locked": true,
+          "source": "user_booking",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=Casa%20Mil%C3%A0%20/%20La%20Pedrera%20Barcelona"
+        },
+        {
+          "id": "d2_guell",
+          "order": 3,
+          "name": "구엘 공원",
+          "name_en": "Park Güell",
+          "lat": 41.4145,
+          "lng": 2.1527,
+          "time": "투어 중",
+          "duration": "투어 포함",
+          "note": "가우디 투어 3번째.",
+          "locked": true,
+          "source": "user_booking",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=Park%20G%C3%BCell%20Barcelona"
+        },
+        {
+          "id": "d2_vicens",
+          "order": 4,
+          "name": "카사 비센스",
+          "name_en": "Casa Vicens",
+          "lat": 41.4035,
+          "lng": 2.1507,
+          "time": "투어 중",
+          "duration": "투어 포함",
+          "note": "가우디 투어 4번째.",
+          "locked": true,
+          "source": "user_booking",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=Casa%20Vicens%20Barcelona"
+        },
+        {
+          "id": "d2_sagrada_tour",
+          "order": 5,
+          "name": "사그라다 파밀리아 (투어)",
+          "name_en": "Sagrada Família",
+          "lat": 41.4036,
+          "lng": 2.1744,
+          "time": "~13:50 투어 종료",
+          "duration": "투어 포함",
+          "note": "가우디 투어 마지막. 07:50–13:50 구간 종료 지점.",
+          "locked": true,
+          "source": "user_booking",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=Sagrada%20Fam%C3%ADlia%20Barcelona"
+        },
+        {
+          "id": "d2_lunch",
+          "order": 6,
+          "name": "점심 · 휴식 (미정)",
+          "name_en": null,
+          "lat": null,
+          "lng": null,
+          "time": "14:00–15:45",
+          "duration": "약 2시간",
+          "note": "투어 종료 후 사그라다 내부(16:00) 전까지. 채울 슬롯.",
+          "slot": "lunch",
+          "locked": false,
+          "source": "ai_fill",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=%EC%A0%90%EC%8B%AC%20%C2%B7%20%ED%9C%B4%EC%8B%9D%20%28%EB%AF%B8%EC%A0%95%29%20Barcelona"
+        },
+        {
+          "id": "d2_sagrada_interior",
+          "order": 7,
+          "name": "사그라다 파밀리아 내부 투어",
+          "name_en": "Sagrada Família Interior Tour",
+          "lat": 41.4036,
+          "lng": 2.1744,
+          "time": "16:00–17:00",
+          "duration": "1시간",
+          "note": "내부 입장 확정. 투어와 별도 예약.",
+          "locked": true,
+          "source": "user_booking",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=Sagrada%20Fam%C3%ADlia%20Interior%20Tour%20Barcelona"
+        },
+        {
+          "id": "d2_dinner",
+          "order": 8,
+          "name": "저녁 (미정)",
+          "name_en": null,
+          "lat": null,
+          "lng": null,
+          "time": "저녁",
+          "duration": "90분",
+          "note": "내부 투어 후. 채울 슬롯.",
+          "slot": "dinner",
+          "locked": false,
+          "source": "ai_fill",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=%EC%A0%80%EB%85%81%20%28%EB%AF%B8%EC%A0%95%29%20Barcelona"
+        }
+      ],
+      "google_maps_directions": "https://www.google.com/maps/dir/?api=1&origin=41.3916%2C2.1649&destination=41.4036%2C2.1744&travelmode=walking&waypoints=41.3954%2C2.1619%7C41.4145%2C2.1527%7C41.4035%2C2.1507%7C41.4036%2C2.1744"
+    },
+    {
+      "id": "day3",
+      "day": 3,
+      "date": "2026-09-02",
+      "label": "Day 3 · 9/2",
+      "title": "미정",
+      "theme": "아직 비움 — 같이 채우기",
+      "locked": false,
+      "summary": "확정 일정 없음. 구시가지·해변·몬주익 등 취향 맞춰 채울 날.",
+      "tips": [
+        "전날 가우디 투어가 길었으니 오전은 여유 있게도 가능.",
+        "원하면 고딕/보른, 바르셀로네타, 몬주익 중 테마부터 정해 보자."
+      ],
+      "places": [],
+      "google_maps_directions": "https://www.google.com/maps"
+    },
+    {
+      "id": "day4",
+      "day": 4,
+      "date": "2026-09-03",
+      "label": "Day 4 · 9/3",
+      "title": "미정",
+      "theme": "아직 비움 — 같이 채우기",
+      "locked": false,
+      "summary": "확정 일정 없음.",
+      "tips": [],
+      "places": [],
+      "google_maps_directions": "https://www.google.com/maps"
+    },
+    {
+      "id": "day5",
+      "day": 5,
+      "date": "2026-09-04",
+      "label": "Day 5 · 9/4",
+      "title": "미정",
+      "theme": "아직 비움 — 같이 채우기",
+      "locked": false,
+      "summary": "확정 일정 없음. 출국 전날.",
+      "tips": [
+        "내일 오후 출국이면 무리한 당일치기(몬세라트 등)는 신중히."
+      ],
+      "places": [],
+      "google_maps_directions": "https://www.google.com/maps"
+    },
+    {
+      "id": "day6",
+      "day": 6,
+      "date": "2026-09-05",
+      "label": "Day 6 · 9/5",
+      "title": "출국",
+      "theme": "체크아웃 · 공항",
+      "locked": true,
+      "summary": "오후 출발 예정. 정확한 비행 시간은 확인 후 업데이트.",
+      "tips": [
+        "출발 N시간 전 공항 도착 기준으로 오전 일정만 짧게.",
+        "비행 시간 확정되면 dates.departure.time_local 을 채워 주세요."
+      ],
+      "places": [
+        {
+          "id": "d6_morning",
+          "order": 1,
+          "name": "오전 (미정)",
+          "name_en": null,
+          "lat": null,
+          "lng": null,
+          "time": "오전",
+          "duration": "-",
+          "note": "출국 시간에 맞춰 0~1곳만. 채울 슬롯.",
+          "slot": "morning",
+          "locked": false,
+          "source": "ai_fill",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=%EC%98%A4%EC%A0%84%20%28%EB%AF%B8%EC%A0%95%29%20Barcelona"
+        },
+        {
+          "id": "d6_airport",
+          "order": 2,
+          "name": "바르셀로나 엘프라트 공항",
+          "name_en": "Barcelona El Prat Airport (BCN)",
+          "lat": 41.2974,
+          "lng": 2.0833,
+          "time": "오후 출발 (시각 미정)",
+          "duration": "-",
+          "note": "정확한 출발 시각 업데이트 예정.",
+          "locked": true,
+          "exclude_from_route": true,
+          "source": "user_fixed",
+          "google_maps": "https://www.google.com/maps/search/?api=1&query=Barcelona%20El%20Prat%20Airport%20%28BCN%29%20Barcelona"
+        }
+      ],
+      "google_maps_directions": "https://www.google.com/maps"
+    }
+  ]
+}
