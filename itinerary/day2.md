@@ -1,36 +1,49 @@
-# Day 2 — 가우디 핵심 루트
+# Day 2 · 9/1 — 가우디 투어 · 사그라다 내부
 
-**테마:** 사그라다 · 산트파우 · 에이샴플레
+**날짜:** 2026-09-01
 
-바르셀로나의 상징인 가우디 건축을 오전~오후로 압축한 핵심 데이.
+**테마:** 확정 투어 데이
+
+07:50–13:50 가우디 투어(카사 바트요 → 카사 밀라 → 구엘공원 → 카사 비센스 → 사그라다). 오후 16:00–17:00 사그라다 내부 투어.
 
 ## 📍 오늘 동선 (구글맵에서 한 번에 열기)
 
-[Google Maps 동선 열기](https://www.google.com/maps/dir/?api=1&origin=41.4036%2C2.1744&destination=41.391%2C2.1648&travelmode=walking&waypoints=41.4136%2C2.1745%7C41.3916%2C2.1649%7C41.3954%2C2.1619)
+[Google Maps 동선 열기](https://www.google.com/maps/dir/?api=1&origin=41.3916%2C2.1649&destination=41.4036%2C2.1744&travelmode=walking&waypoints=41.3954%2C2.1619%7C41.4145%2C2.1527%7C41.4035%2C2.1507%7C41.4036%2C2.1744)
 
 ## 스팟 목록
 
-1. **사그라다 파밀리아** — 오전 09:30 · 2시간  
-   타워 입장권이면 더 좋음. 정문 사진 포인트 확보.  
-   [지도에서 보기](https://www.google.com/maps/search/?api=1&query=Sagrada%20Fam%C3%ADlia%20Barcelona)
+1. **카사 바트요** *(고정)* — 07:50 투어 시작 · 투어 포함  
+   가우디 투어 1번째. 동선 확정.  
+   [지도에서 보기](https://www.google.com/maps/search/?api=1&query=41.3916%2C2.1649)
 
-2. **산트파우 병원** — 오전~점심 · 90분  
-   사그라다에서 도보 15분. 한적하고 사진 좋음.  
-   [지도에서 보기](https://www.google.com/maps/search/?api=1&query=Recinte%20Modernista%20de%20Sant%20Pau%20Barcelona)
+2. **카사 밀라 (라 페드레라)** *(고정)* — 투어 중 · 투어 포함  
+   가우디 투어 2번째. 숙소(프로벤사)와 매우 가까움.  
+   [지도에서 보기](https://www.google.com/maps/search/?api=1&query=41.3954%2C2.1619)
 
-3. **카사 바트요** — 오후 · 45분  
-   파세이그 데 그라시아. 외관 감상 또는 내부 투어.  
-   [지도에서 보기](https://www.google.com/maps/search/?api=1&query=Casa%20Batll%C3%B3%20Barcelona)
+3. **구엘 공원** *(고정)* — 투어 중 · 투어 포함  
+   가우디 투어 3번째.  
+   [지도에서 보기](https://www.google.com/maps/search/?api=1&query=41.4145%2C2.1527)
 
-4. **카사 밀라 (라 페드레라)** — 오후 · 60분  
-   옥상 굴뚝이 포인트. 바트요와 가까운 동선.  
-   [지도에서 보기](https://www.google.com/maps/search/?api=1&query=Casa%20Mil%C3%A0%20/%20La%20Pedrera%20Barcelona)
+4. **카사 비센스** *(고정)* — 투어 중 · 투어 포함  
+   가우디 투어 4번째.  
+   [지도에서 보기](https://www.google.com/maps/search/?api=1&query=41.4035%2C2.1507)
 
-5. **파세이그 데 그라시아** — 저녁 · 40분  
-   쇼핑·카페. 저녁은 에이샴플레 또는 그라시아로.  
-   [지도에서 보기](https://www.google.com/maps/search/?api=1&query=Passeig%20de%20Gr%C3%A0cia%20Barcelona)
+5. **사그라다 파밀리아 (투어)** *(고정)* — ~13:50 투어 종료 · 투어 포함  
+   가우디 투어 마지막. 07:50–13:50 구간 종료 지점.  
+   [지도에서 보기](https://www.google.com/maps/search/?api=1&query=41.4036%2C2.1744)
+
+6. **점심 · 휴식 (미정)** *(미정)* — 14:00–15:45 · 약 2시간  
+   투어 종료 후 사그라다 내부(16:00) 전까지. 채울 슬롯.  
+
+7. **사그라다 파밀리아 내부 투어** *(고정)* — 16:00–17:00 · 1시간  
+   내부 입장 확정. 투어와 별도 예약.  
+   [지도에서 보기](https://www.google.com/maps/search/?api=1&query=41.4036%2C2.1744)
+
+8. **저녁 (미정)** *(미정)* — 저녁 · 90분  
+   내부 투어 후. 채울 슬롯.  
 
 ## 팁
 
-- 사그라다 파밀리아는 오전 타임슬롯 예약 필수.
-- 카사 바트요·카사 밀라는 외관만 봐도 충분. 내부는 취향에 따라.
+- 아침 일찍 출발 — 숙소에서 카사 바트요까지 도보 가능권.
+- 투어 종료(13:50) 후 ~16:00 사이 점심·휴식 슬롯은 미정.
+- 내부 투어 후 저녁도 아직 미정.

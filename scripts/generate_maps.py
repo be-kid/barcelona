@@ -24,31 +24,47 @@ def maps_search_url(place: dict) -> str:
 def maps_place_url(place: dict) -> str:
     # Reliable pin: search by coordinates + name
     name = place.get("name_en") or place.get("name") or "Barcelona"
+    if place.get("lat") is not None and place.get("lng") is not None:
+        return (
+            "https://www.google.com/maps/search/?api=1&query="
+            + urllib.parse.quote(f"{place['lat']},{place['lng']}")
+        )
+    if not name or name == "Barcelona":
+        return "https://www.google.com/maps/search/?api=1&query=Barcelona"
     query = urllib.parse.quote(f"{name} Barcelona")
     return f"https://www.google.com/maps/search/?api=1&query={query}"
 
 
+def _mappable(places: list[dict]) -> list[dict]:
+    return [
+        p
+        for p in places
+        if p.get("lat") is not None
+        and p.get("lng") is not None
+        and not p.get("exclude_from_route")
+    ]
+
+
 def maps_dir_url(places: list[dict], travelmode: str = "walking") -> str:
     """Build a Google Maps directions URL with ordered stops (max ~10)."""
-    if not places:
+    route = _mappable(places)
+    if not route:
         return "https://www.google.com/maps"
-    if len(places) == 1:
-        return maps_place_url(places[0])
+    if len(route) == 1:
+        return maps_place_url(route[0])
 
     # /dir/A/B/C/... works well and shows the route with pins
     parts = []
-    for p in places:
+    for p in route:
         parts.append(urllib.parse.quote(f"{p['lat']},{p['lng']}"))
     path = "/".join(parts)
     return f"https://www.google.com/maps/dir/{path}/data=!4m2!4m1!3e2"  # 3e2 = walking
 
 
 def maps_dir_api_url(places: list[dict], travelmode: str = "walking") -> str:
-    route = [p for p in places if not p.get("exclude_from_route")]
+    route = _mappable(places)
     if len(route) < 2:
-        return maps_place_url(route[0]) if route else (
-            maps_place_url(places[0]) if places else "https://www.google.com/maps"
-        )
+        return maps_place_url(route[0]) if route else "https://www.google.com/maps"
     origin = f"{route[0]['lat']},{route[0]['lng']}"
     destination = f"{route[-1]['lat']},{route[-1]['lng']}"
     waypoints = "|".join(f"{p['lat']},{p['lng']}" for p in route[1:-1])
@@ -68,10 +84,14 @@ def write_csv(day: dict, path: Path) -> None:
         w = csv.writer(f)
         w.writerow(["name", "description", "latitude", "longitude", "order", "time"])
         for p in day["places"]:
+            if p.get("lat") is None or p.get("lng") is None:
+                continue
+            en = p.get("name_en") or ""
+            label = f"{p['order']}. {p['name']}" + (f" ({en})" if en else "")
             desc = f"{day['label']} · {p.get('time', '')} · {p.get('note', '')}"
             w.writerow(
                 [
-                    f"{p['order']}. {p['name']} ({p['name_en']})",
+                    label,
                     desc,
                     p["lat"],
                     p["lng"],
@@ -85,6 +105,8 @@ def write_kml(day: dict, path: Path) -> None:
     placemarks = []
     coords_line = []
     for p in day["places"]:
+        if p.get("lat") is None or p.get("lng") is None:
+            continue
         coords_line.append(f"{p['lng']},{p['lat']},0")
         desc = escape(
             f"{p.get('time', '')} · {p.get('duration', '')}\n{p.get('note', '')}"
@@ -128,6 +150,8 @@ def write_all_kml(days: list[dict], path: Path) -> None:
     for day in days:
         marks = []
         for p in day["places"]:
+            if p.get("lat") is None or p.get("lng") is None:
+                continue
             desc = escape(
                 f"{p.get('time', '')} · {p.get('duration', '')}\n{p.get('note', '')}"
             )
@@ -147,7 +171,7 @@ def write_all_kml(days: list[dict], path: Path) -> None:
     kml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>Barcelona 4N5D</name>
+    <name>Barcelona trip</name>
 {chr(10).join(folders)}
   </Document>
 </kml>
@@ -158,6 +182,8 @@ def write_all_kml(days: list[dict], path: Path) -> None:
 def write_day_markdown(day: dict, dir_url: str, path: Path) -> None:
     lines = [
         f"# {day['label']} — {day['title']}",
+        "",
+        f"**날짜:** {day.get('date', '')}",
         "",
         f"**테마:** {day['theme']}",
         "",
@@ -170,14 +196,20 @@ def write_day_markdown(day: dict, dir_url: str, path: Path) -> None:
         "## 스팟 목록",
         "",
     ]
+    if not day["places"]:
+        lines.append("_아직 스팟이 없습니다. 같이 채워 가요._")
+        lines.append("")
     for p in day["places"]:
-        pin = maps_place_url(p)
+        pin = maps_place_url(p) if p.get("lat") is not None else None
         opt = " *(선택)*" if p.get("optional") else ""
+        lock = " *(고정)*" if p.get("locked") else ""
+        tbd = " *(미정)*" if p.get("lat") is None else ""
         lines.append(
-            f"{p['order']}. **{p['name']}**{opt} — {p.get('time', '')} · {p.get('duration', '')}  "
+            f"{p['order']}. **{p['name']}**{lock}{opt}{tbd} — {p.get('time', '')} · {p.get('duration', '')}  "
         )
         lines.append(f"   {p.get('note', '')}  ")
-        lines.append(f"   [지도에서 보기]({pin})")
+        if pin:
+            lines.append(f"   [지도에서 보기]({pin})")
         lines.append("")
     if day.get("tips"):
         lines.append("## 팁")
@@ -231,6 +263,8 @@ def main() -> None:
         w.writerow(["name", "description", "latitude", "longitude", "day", "order"])
         for day in data["days_plan"]:
             for p in day["places"]:
+                if p.get("lat") is None or p.get("lng") is None:
+                    continue
                 w.writerow(
                     [
                         f"{day['label']} {p['order']}. {p['name']}",

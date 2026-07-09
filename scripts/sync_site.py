@@ -23,7 +23,13 @@ def maps_place_url(place: dict) -> str:
 def maps_dir_api_url(places: list[dict], travelmode: str = "walking") -> str:
     from urllib.parse import urlencode
 
-    route = [p for p in places if not p.get("exclude_from_route") and p.get("lat") is not None]
+    route = [
+        p
+        for p in places
+        if not p.get("exclude_from_route")
+        and p.get("lat") is not None
+        and p.get("lng") is not None
+    ]
     if len(route) < 2:
         return maps_place_url(route[0]) if route else "https://www.google.com/maps"
     origin = f"{route[0]['lat']},{route[0]['lng']}"

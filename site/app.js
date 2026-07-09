@@ -131,30 +131,43 @@
     el.allMaps.href = day.google_maps_directions || "#";
     el.allMaps.textContent = `${day.label} 동선`;
 
-    const places = day.places
-      .map((p) => {
-        const lock = p.locked ? `<span class="badge badge-lock">고정</span>` : "";
-        const opt = p.optional ? `<span class="badge badge-opt">선택</span>` : "";
-        return `
+    const places = day.places.length
+      ? day.places
+          .map((p) => {
+            const lock = p.locked ? `<span class="badge badge-lock">고정</span>` : "";
+            const opt = p.optional ? `<span class="badge badge-opt">선택</span>` : "";
+            const tbd =
+              p.lat == null ? `<span class="badge badge-opt">미정</span>` : "";
+            const pin =
+              p.lat != null
+                ? `<a class="pin-link" href="${p.google_maps || "#"}" target="_blank" rel="noopener" onclick="event.stopPropagation()">구글맵</a>`
+                : `<span class="pin-link" style="opacity:.45">미정</span>`;
+            return `
         <li class="place" data-id="${escapeHtml(p.id || p.order)}" tabindex="0">
           <span class="num">${p.order}</span>
           <div>
-            <h3>${escapeHtml(p.name)}${lock}${opt}</h3>
+            <h3>${escapeHtml(p.name)}${lock}${opt}${tbd}</h3>
             <p class="meta">${escapeHtml(p.time || "")} · ${escapeHtml(p.duration || "")}</p>
             <p class="note">${escapeHtml(p.note || "")}</p>
           </div>
-          <a class="pin-link" href="${p.google_maps || "#"}" target="_blank" rel="noopener" onclick="event.stopPropagation()">구글맵</a>
+          ${pin}
         </li>`;
-      })
-      .join("");
+          })
+          .join("")
+      : `<li class="place" style="cursor:default"><div><p class="note">아직 스팟이 없어요. 확정되면 알려주세요.</p></div></li>`;
 
     const tips = (day.tips || [])
       .map((t) => `<li>${escapeHtml(t)}</li>`)
       .join("");
 
+    const dateLine = day.date
+      ? `<p class="day-theme">${escapeHtml(day.date)}</p>`
+      : "";
+
     el.body.innerHTML = `
       <article class="day-card">
         <h2>${escapeHtml(day.title)}</h2>
+        ${dateLine}
         <p class="day-theme">${escapeHtml(day.theme || "")}</p>
         <p class="day-summary">${escapeHtml(day.summary || "")}</p>
         <ul class="places">${places}</ul>
@@ -216,6 +229,16 @@
     const res = await fetch("./data/itinerary.json", { cache: "no-store" });
     state.data = await res.json();
     document.title = `${state.data.title} · 우리 일정`;
+    const eyebrow = document.getElementById("eyebrow");
+    if (eyebrow) {
+      const n = state.data.nights ?? "";
+      const d = state.data.days ?? "";
+      const arr = state.data.dates?.arrival?.date?.slice(5).replace("-", "/") || "";
+      const dep = state.data.dates?.departure?.date?.slice(5).replace("-", "/") || "";
+      eyebrow.textContent = arr
+        ? `Barcelona · ${n}N/${d}D · ${arr}–${dep}`
+        : `Barcelona · ${n}N / ${d}D`;
+    }
     el.lede.textContent =
       state.data.share?.note ||
       state.data.assumptions?.companions ||

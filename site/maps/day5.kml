@@ -1,41 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>Day 5 · 여유 · 출국</name>
-    <description>비행 시간에 맞춰 가볍게. 못 간 곳 보완하거나 쇼핑으로 마무리.</description>
-    <Placemark>
-      <name>1. 피카소 미술관</name>
-      <description>오전 · 90분
-보른에 있음. 사전 예약 권장.</description>
-      <Point><coordinates>2.1809,41.3852,0</coordinates></Point>
-    </Placemark>
-    <Placemark>
-      <name>2. 엘 보른 문화센터</name>
-      <description>오전 · 40분
-유적 보존 공간. 가볍게 둘러보기.</description>
-      <Point><coordinates>2.1836,41.3856,0</coordinates></Point>
-    </Placemark>
-    <Placemark>
-      <name>3. 엘 코르테 잉글레스 / 쇼핑</name>
-      <description>점심 전 · 60분
-기념품·필수품. 비행 시간에 맞게 축소.</description>
-      <Point><coordinates>2.17,41.3866,0</coordinates></Point>
-    </Placemark>
-    <Placemark>
-      <name>4. 바르셀로나 엘프라트 공항</name>
-      <description>출국 · -
-터미널·항공사 확인 후 이동. 동선 링크에는 포함하지 않음(대중교통/택시).</description>
-      <Point><coordinates>2.0833,41.2974,0</coordinates></Point>
-    </Placemark>
-    <Placemark>
-      <name>Day 5 route</name>
-      <Style>
-        <LineStyle><color>ff2a6fdb</color><width>4</width></LineStyle>
-      </Style>
-      <LineString>
-        <tessellate>1</tessellate>
-        <coordinates>2.1809,41.3852,0 2.1836,41.3856,0 2.17,41.3866,0 2.0833,41.2974,0</coordinates>
-      </LineString>
-    </Placemark>
+    <name>Day 5 · 9/4 · 미정</name>
+    <description>확정 일정 없음. 출국 전날.</description>
+
+
   </Document>
 </kml>

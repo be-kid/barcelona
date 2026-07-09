@@ -1,41 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>Day 3 · 언덕 위 전망 데이</name>
-    <description>가우디 공원과 시내 전망을 한 번에. 오르막이 있으니 편한 신발을.</description>
-    <Placemark>
-      <name>1. 파크 구엘</name>
-      <description>오전 09:00 · 2시간
-모자이크 도마뱀·전망 테라스. 오전 슬롯이 한산.</description>
-      <Point><coordinates>2.1527,41.4145,0</coordinates></Point>
-    </Placemark>
-    <Placemark>
-      <name>2. 그라시아 지구</name>
-      <description>점심 · 90분
-플라사 델 솔 등에서 현지인 분위기 점심.</description>
-      <Point><coordinates>2.158,41.4036,0</coordinates></Point>
-    </Placemark>
-    <Placemark>
-      <name>3. 카사 비센스</name>
-      <description>오후 · 60분
-가우디 초기작. 시간이 없으면 패스 가능.</description>
-      <Point><coordinates>2.1507,41.4035,0</coordinates></Point>
-    </Placemark>
-    <Placemark>
-      <name>4. 벙커스 델 카르멜</name>
-      <description>일몰 · 90분
-시내 최고 전망 중 하나. 물·모자 챙기기.</description>
-      <Point><coordinates>2.1608,41.4193,0</coordinates></Point>
-    </Placemark>
-    <Placemark>
-      <name>Day 3 route</name>
-      <Style>
-        <LineStyle><color>ff2a6fdb</color><width>4</width></LineStyle>
-      </Style>
-      <LineString>
-        <tessellate>1</tessellate>
-        <coordinates>2.1527,41.4145,0 2.158,41.4036,0 2.1507,41.4035,0 2.1608,41.4193,0</coordinates>
-      </LineString>
-    </Placemark>
+    <name>Day 3 · 9/2 · 미정</name>
+    <description>확정 일정 없음. 구시가지·해변·몬주익 등 취향 맞춰 채울 날.</description>
+
+
   </Document>
 </kml>
