@@ -1,72 +1,36 @@
 # 바르셀로나 여행 맵 플래너
 
-실제 일정(숙소·날짜·확정 투어)을 `data/itinerary.json`에 두고, 날짜별 지도·공유 페이지로 씁니다.
+실제 일정은 `data/itinerary.json`에 두고, **앱 개발**은 `apps/web`에서 진행합니다.
 
-## 같이 보기 (가성비 1순위)
+## 앱 개발 (지금)
 
-| 방법 | 비용 | 설명 |
-|------|------|------|
-| **GitHub Pages** | **무료** | `site/` 배포 → URL 공유. [설정 방법](docs/deploy.md) |
-| My Maps CSV/KML | 무료 | 구글 계정에 핀 저장 |
-| 실시간 공동 편집 | 추후 | Firebase 등 필요할 때만 |
+```bash
+cd apps/web
+npm install
+npm run dev
+```
 
-로컬에서 공유 페이지 미리보기:
+레이아웃: **일정 | 지도 | 채팅**  
+키 없으면 목업 AI로 UI·동선부터 개발 가능. 자세한 내용: [`apps/web/README.md`](apps/web/README.md)
+
+## Supabase
+
+- 설계: [`docs/supabase-design.md`](docs/supabase-design.md)
+- 마이그레이션: `supabase/migrations/001_init.sql`
+- Edge Function: `supabase/functions/chat-ai/`
+
+## 정적 공유 페이지 (AI 없음)
 
 ```bash
 python3 scripts/sync_site.py
 python3 -m http.server 8080 --directory site
-# http://localhost:8080
 ```
 
-## 바로 쓰기
+GitHub Pages: [`docs/deploy.md`](docs/deploy.md)
 
-| 방법 | 설명 |
-|------|------|
-| **공유 페이지** | `site/` — 왼쪽 일정 · 오른쪽(데스크톱) 지도 |
-| **동선 링크** | `itinerary/README.md`에서 Day별 「동선 열기」 |
-| **My Maps 핀** | [mymaps.google.com](https://www.google.com/mymaps) → 가져오기 → `maps/dayN.csv` |
-
-## 일정 수정 후 맵·사이트 갱신
-
-1. `data/itinerary.json`에서 숙소·스팟 수정  
-2. 실행:
+## 일정 수정 → 맵/사이트 동기화
 
 ```bash
 python3 scripts/sync_site.py
+cp data/itinerary.json apps/web/public/itinerary.json
 ```
-
-3. `site/`, `maps/`, `itinerary/`가 갱신됩니다. `main`에 푸시하면 Pages가 자동 배포됩니다.
-
-## 폴더 구조
-
-```
-data/itinerary.json          # 원본 일정 (여기만 편집)
-scripts/generate_maps.py     # 구글맵 URL + CSV/KML 생성
-maps/day1.csv … day5.kml     # My Maps 가져오기용
-itinerary/day1.md …          # 날짜별 요약 + 링크
-public/index.html            # 클릭해서 쓰는 플래너
-```
-
-## 기본 4박 5일 테마
-
-1. 도착 · 구시가지 (고딕 / 람블라스 / 보른)  
-2. 가우디 핵심 (사그라다 · 산트파우 · 카사 바트요/밀라)  
-3. 파크 구엘 · 그라시아 · 벙커스  
-4. 몬주익 · 매직 분수 · 항구  
-5. 여유 · 쇼핑 · 출국  
-
-대화로 일정을 바꾸면 같은 방식으로 맵 파일을 다시 뽑아 드리면 됩니다.
-
-## 다음 단계: 웹(지도+채팅) 구조
-
-숙소·큰 일정은 고정하고, 웹에서는 세부만 대화로 채우는 설계는 아래에 정리해 두었습니다.
-
-- [`docs/architecture.md`](docs/architecture.md) — 전체 구조 (지도 | 채팅, locked vs draft)
-- [`docs/ai-role.md`](docs/ai-role.md) — OpenAI 역할·비용
-- [`docs/itinerary.schema.json`](docs/itinerary.schema.json) — 일정 스키마
-
-**결과만 띄우기**면 AI 연동 불필요. **웹에서 대화 편집**할 때만 OpenAI(채팅 API)를 붙이면 됩니다. Cursor SDK는 이 제품 채팅용으로 쓰지 않습니다.
-
-### 둘이서 AI 대화까지
-Supabase(Edge Function + DB + Realtime) 설계: [`docs/supabase-design.md`](docs/supabase-design.md)  
-SQL 초안: `supabase/migrations/001_init.sql`
