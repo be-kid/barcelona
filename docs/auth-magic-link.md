@@ -29,6 +29,23 @@ python3 scripts/generate_seed_sql.py
 
 `infinite recursion detected in policy for relation "trip_members"` 가 나오면 **004** SQL을 실행하세요.
 
+### Realtime (둘이 동시에 보기)
+
+**방법 A — Dashboard (쉬움)**  
+Database → **Tables** → `itineraries` → Realtime **ON**  
+같게 `messages` 테이블도 Realtime **ON**
+
+**방법 B — SQL Editor**
+
+```sql
+-- supabase/migrations/005_enable_realtime.sql
+alter publication supabase_realtime add table public.itineraries;
+alter publication supabase_realtime add table public.messages;
+```
+
+로컬에서 채팅은 API 응답으로 바로 보이므로 Realtime 없어도 됩니다.  
+**여친 화면에 내 채팅·일정이 실시간 반영**되려면 위 설정 필요.
+
 `trips.invite_code` — 여친에게 공유할 코드 (Dashboard에서 확인 가능)
 
 ## 3. 앱 `.env.local`

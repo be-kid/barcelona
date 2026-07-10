@@ -56,11 +56,56 @@ function PlannerApp({
   useEffect(() => {
     const unsubI = subscribeItinerary((data) => setItinerary(data))
     const unsubM = subscribeMessages((msg) => {
+      // assistant만: user는 DB/응답 동기화로 (Realtime user 중복 방지)
+      if (msg.role !== 'assistant') return
       setMessages((prev) => (prev.some((m) => m.id === msg.id) ? prev : [...prev, msg]))
     })
     return () => {
       unsubI?.()
       unsubM?.()
+    }
+  }, [])
+
+  // 새로고침 직후에만: 서버가 아직 답 생성 중이면 DB에서 회수 (전송마다 돌리지 않음)
+  useEffect(() => {
+    if (useMockAi) return
+    let cancelled = false
+    let attempts = 0
+
+    const tick = async () => {
+      if (cancelled || attempts >= 20) return
+      attempts += 1
+      try {
+        const msgs = await loadMessages()
+        if (cancelled) return
+        const last = msgs.at(-1)
+        if (!last || last.role !== 'user') return
+        const age = Date.now() - new Date(last.created_at).getTime()
+        if (age > 3 * 60_000) return
+
+        setMessages(msgs)
+        if (msgs.at(-1)?.role === 'assistant') {
+          setItinerary(await loadItinerary())
+          return
+        }
+        setTimeout(tick, 3000)
+      } catch {
+        // ignore
+      }
+    }
+
+    void (async () => {
+      const msgs = await loadMessages()
+      if (cancelled) return
+      const last = msgs.at(-1)
+      if (last?.role === 'user') {
+        const age = Date.now() - new Date(last.created_at).getTime()
+        if (age <= 3 * 60_000) setTimeout(tick, 3000)
+      }
+    })()
+
+    return () => {
+      cancelled = true
     }
   }, [])
 
@@ -74,18 +119,21 @@ function PlannerApp({
       if (!itinerary) return
       setBusy(true)
       setError(null)
-      const userMsg: ChatMessage = {
-        id: uid(),
-        role: 'user',
-        content: text,
-        focus_day: dayId,
-        created_at: new Date().toISOString(),
-      }
-      setMessages((prev) => [...prev, userMsg])
+      const now = new Date().toISOString()
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: uid(),
+          role: 'user',
+          content: text,
+          focus_day: dayId,
+          created_at: now,
+        },
+      ])
       try {
         const res = await sendChat({ itinerary, message: text, focusDay: dayId })
-        setItinerary(res.itinerary)
         if (useMockAi) {
+          setItinerary(res.itinerary)
           setMessages((prev) => [
             ...prev,
             {
@@ -94,9 +142,12 @@ function PlannerApp({
               content: res.assistant_message,
               focus_day: dayId,
               diff_summary: res.diff_summary,
-              created_at: new Date().toISOString(),
+              created_at: now,
             },
           ])
+        } else {
+          setItinerary(await loadItinerary())
+          setMessages(await loadMessages())
         }
       } catch (e) {
         setError(e instanceof Error ? e.message : '채팅 실패')

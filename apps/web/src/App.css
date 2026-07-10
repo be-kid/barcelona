@@ -91,6 +91,22 @@ body {
   border-radius: 0.3em;
 }
 
+.chat-hint {
+  margin: 0 0 0.75rem;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--muted);
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+}
+
+.chat-hint strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
 .stay {
   background: var(--soft);
   border: 1px solid var(--line);

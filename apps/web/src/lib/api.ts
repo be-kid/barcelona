@@ -1,18 +1,28 @@
 import type { ChatMessage, ChatResponse, Itinerary } from '../types'
+import { formatFunctionsInvokeError, formatSupabaseError } from './errors'
 import { enrichItinerary } from './maps'
 import { mockChat } from './mockChat'
 import { isSupabaseConfigured, supabase, tripId, useMockAi } from './supabase'
 
 export async function loadItinerary(): Promise<Itinerary> {
-  if (supabase && tripId) {
+  if (supabase && tripId && isSupabaseConfigured) {
     const { data, error } = await supabase
       .from('itineraries')
       .select('data')
       .eq('trip_id', tripId)
       .single()
-    if (!error && data?.data) {
-      return enrichItinerary(data.data as Itinerary)
+    if (error) {
+      if (error.code === 'PGRST116') {
+        throw new Error(
+          'Supabase에 일정이 없어요. SQL Editor에서 trips 행과 supabase/seed/002_itinerary_data.sql 을 실행하세요.',
+        )
+      }
+      throw new Error(formatSupabaseError(error))
     }
+    if (!data?.data) {
+      throw new Error('Supabase itineraries.data 가 비어 있어요.')
+    }
+    return enrichItinerary(data.data as Itinerary)
   }
 
   const res = await fetch('/itinerary.json', { cache: 'no-store' })
@@ -41,7 +51,7 @@ export async function sendChat(opts: {
     return mockChat(opts.itinerary, opts.message, opts.focusDay)
   }
 
-  const { data, error } = await supabase.functions.invoke('chat-ai', {
+  const { data, error, response } = await supabase.functions.invoke('chat-ai', {
     body: {
       trip_id: tripId,
       message: opts.message,
@@ -50,10 +60,19 @@ export async function sendChat(opts: {
   })
 
   if (error) {
-    throw new Error(error.message || 'chat-ai 호출 실패')
+    console.error('chat-ai invoke failed', { error, data, status: response?.status })
+    throw new Error(await formatFunctionsInvokeError(error, data, response))
   }
 
-  const payload = data as ChatResponse
+  const payload = data as ChatResponse & { error?: string }
+  if (payload?.error) {
+    throw new Error(await formatFunctionsInvokeError(null, payload))
+  }
+
+  if (!payload.itinerary?.days_plan) {
+    throw new Error('AI 응답 일정 형식이 잘못됐어요. 다시 시도해 주세요.')
+  }
+
   return {
     ...payload,
     itinerary: enrichItinerary(payload.itinerary),

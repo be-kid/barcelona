@@ -1,6 +1,6 @@
-# Supabase Edge Function: chat-ai
-# Deploy: supabase functions deploy chat-ai --no-verify-jwt=false
-# Secrets: supabase secrets set OPENAI_API_KEY=sk-...
+// Supabase Edge Function: chat-ai
+// Deploy: supabase functions deploy chat-ai
+// Secrets: supabase secrets set OPENAI_API_KEY=sk-...
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1'
 
@@ -41,6 +41,7 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const anonKey = Deno.env.get('SUPABASE_ANON_KEY')!
     const openaiKey = Deno.env.get('OPENAI_API_KEY')
+    const openaiModel = Deno.env.get('OPENAI_MODEL') || 'gpt-4.1-mini'
 
     const authHeader = req.headers.get('Authorization')
     if (!authHeader) {
@@ -86,7 +87,13 @@ Deno.serve(async (req) => {
       .single()
 
     if (itinError || !itinRow) {
-      return json({ error: 'itinerary not found' }, 404)
+      return json(
+        {
+          error: 'itinerary not found',
+          detail: 'trips row + supabase/seed/002_itinerary_data.sql required',
+        },
+        404,
+      )
     }
 
     const itinerary = itinRow.data as Itinerary
@@ -97,7 +104,7 @@ Deno.serve(async (req) => {
       .select('role, content, focus_day')
       .eq('trip_id', tripId)
       .order('created_at', { ascending: false })
-      .limit(12)
+      .limit(6)
 
     await admin.from('messages').insert({
       trip_id: tripId,
@@ -129,11 +136,13 @@ Deno.serve(async (req) => {
     const compact = compactItinerary(itinerary, focusDay)
     const system = `당신은 커플 여행 일정 편집 조수입니다.
 규칙:
-1) locked:true 인 stay/day/place 는 절대 변경하지 마세요.
-2) 전체 일정을 다시 쓰지 말고, 요청된 날짜/슬롯만 수정하세요.
-3) 응답은 JSON만: {"assistant_message":"...","itinerary":{전체일정},"diff_summary":["..."],"needs_clarification":false}
-4) itinerary 스키마를 유지하고 places 의 order를 1부터 다시 매기세요.
-5) 좌표가 불확실하면 needs_clarification=true 로 질문하고 itinerary는 기존 유지.
+1) locked:true 인 stay/place 는 기본적으로 바꾸지 마세요. (사용자가 "확정 취소/일정 변경"을 명시하면 해당 항목만 수정)
+2) focus_day가 있으면 그 날짜만 수정하세요. 다른 Day는 건드리지 마세요.
+3) 응답 JSON의 itinerary.days_plan[0].id 는 focus_day 와 같게 (예: "day4").
+4) 응답 형식: {"assistant_message":"...","itinerary":{"days_plan":[{...}]},"diff_summary":["..."],"needs_clarification":false}
+5) places 의 order는 1부터, lat/lng 포함. 좌표가 애매하면 needs_clarification=true 로 두고 itinerary는 기존 유지.
+6) assistant_message 는 비개발자용 한국어로만 작성. needs_clarification, lat, lng, JSON, itinerary 같은 기술 용어는 절대 쓰지 마세요.
+   위치가 불확실하면 예: "○○ 맞죠? 구글맵에 나오는 장소 이름(또는 주소)을 알려주시면 지도에 반영할게요." 처럼 친절히 질문하세요.
 constraints: ${(itinerary.constraints || []).join(' | ')}
 focus_day: ${focusDay || 'none'}`
 
@@ -149,7 +158,7 @@ focus_day: ${focusDay || 'none'}`
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4.1-mini',
+        model: openaiModel,
         temperature: 0.4,
         response_format: { type: 'json_object' },
         messages: [
@@ -176,31 +185,50 @@ focus_day: ${focusDay || 'none'}`
       needs_clarification?: boolean
     }
 
-    const assistant_message = parsed.assistant_message || '반영했습니다.'
+    const assistant_message0 = parsed.assistant_message || '반영했습니다.'
+    let needs_clarification = Boolean(parsed.needs_clarification)
+    let assistant_message = polishAssistantMessage(
+      assistant_message0,
+      needs_clarification,
+      message,
+    )
+
     const diff_summary = parsed.diff_summary || []
-    const needs_clarification = Boolean(parsed.needs_clarification)
 
     let nextItinerary = itinerary
     let nextVersion = version
+    let applied = false
 
     if (!needs_clarification && parsed.itinerary) {
-      assertNoLockedMutation(itinerary, parsed.itinerary)
-      nextItinerary = parsed.itinerary
-      nextVersion = version + 1
-      const { error: updateError } = await admin
-        .from('itineraries')
-        .update({
-          data: nextItinerary,
-          version: nextVersion,
-          updated_by: user.id,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('trip_id', tripId)
-        .eq('version', version)
+      const aiItinerary = normalizeAiItinerary(parsed.itinerary, focusDay)
+      if (aiItinerary) {
+        const patched = applyItineraryPatch(itinerary, aiItinerary, focusDay)
+        if (!itinerariesEqual(itinerary, patched)) {
+          nextItinerary = patched
+          nextVersion = version + 1
+          applied = true
+          const { error: updateError } = await admin
+            .from('itineraries')
+            .update({
+              data: nextItinerary,
+              version: nextVersion,
+              updated_by: user.id,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('trip_id', tripId)
+            .eq('version', version)
 
-      if (updateError) {
-        return json({ error: 'version_conflict', detail: updateError.message }, 409)
+          if (updateError) {
+            return json({ error: 'version_conflict', detail: updateError.message }, 409)
+          }
+        }
       }
+    }
+
+    if (!needs_clarification && !applied) {
+      needs_clarification = true
+      assistant_message =
+        '요청은 이해했는데 일정 반영에 실패했어요. 지금 선택한 Day 탭에서 조금 더 구체적으로 다시 보내 주세요. (예: 장소 이름, 시간대)'
     }
 
     await admin.from('messages').insert({
@@ -215,7 +243,7 @@ focus_day: ${focusDay || 'none'}`
     if (usage) {
       await admin.from('ai_runs').insert({
         trip_id: tripId,
-        model: 'gpt-4.1-mini',
+        model: openaiModel,
         input_tokens: usage.prompt_tokens ?? null,
         output_tokens: usage.completion_tokens ?? null,
       })
@@ -241,63 +269,215 @@ function json(data: unknown, status = 200) {
   })
 }
 
+function polishAssistantMessage(
+  message: string,
+  needsClarification: boolean,
+  userMessage: string,
+): string {
+  const technical =
+    /needs_clarification|diff_summary|focus_day|\bitinerary\b|\bjson\b|\blat\b|\blng\b|좌표가?\s*필요|정확한\s*좌표/i.test(
+      message,
+    )
+
+  let text = message
+    .replace(/needs_clarification\s*(유지|true|false)?/gi, '')
+    .replace(/`[^`]+`/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+  if (!needsClarification) {
+    return text || '반영했습니다.'
+  }
+
+  const hint = userMessage.trim().slice(0, 48)
+  const placeLike =
+    /맛집|카페|식당|장소|해변|시장|박물관|공원|바|레스토랑|구역|동네|역|hotel|restaurant/i.test(
+      userMessage,
+    )
+
+  if (technical || /좌표|위치.*불확실|lat|lng/i.test(message)) {
+    if (hint) {
+      return `「${hint}」 넣으려는 거 맞죠? 지도에 정확히 찍으려면 구글맵에 보이는 장소 이름이나 주소를 알려주세요. 그러면 바로 반영할게요.`
+    }
+    return '지도에 정확히 넣으려면 구글맵에 보이는 장소 이름이나 대략적인 위치(동네·역 이름)를 알려주세요. 그러면 바로 반영할게요.'
+  }
+
+  if (placeLike && (text.length < 15 || !/[?？]|주세요|알려|말씀/.test(text))) {
+    return hint
+      ? `「${hint}」 좋아요! 몇 시쯤 갈지, 또는 구글맵 장소 이름을 알려주시면 일정에 넣을게요.`
+      : '좋아요! 몇 시쯤 갈지와 장소 이름(구글맵에 나오는 그대로)을 알려주시면 일정에 넣을게요.'
+  }
+
+  if (text.length < 12 || technical) {
+    return '조금만 더 구체적으로 말해 주시면 반영할게요. 예: 오후에 보케리아 시장, 저녁 8시 타파스 바처럼 시간과 장소를 함께 적어 주세요.'
+  }
+
+  if (!/[?？]|주세요|알려|말씀|확인/.test(text)) {
+    text += ' 조금만 더 알려주시면 바로 반영할게요.'
+  }
+
+  return text
+}
+
 function compactItinerary(itinerary: Itinerary, focusDay: string | null) {
-  if (!focusDay) return itinerary
+  const base = {
+    title: itinerary.title,
+    constraints: itinerary.constraints,
+    stay: itinerary.stay
+      ? {
+          name: itinerary.stay.name,
+          lat: itinerary.stay.lat,
+          lng: itinerary.stay.lng,
+          locked: itinerary.stay.locked,
+        }
+      : undefined,
+  }
+
+  if (!focusDay) {
+    return {
+      ...base,
+      days_plan: (itinerary.days_plan ?? []).map((d) => ({
+        id: d.id,
+        label: d.label,
+        title: d.title,
+        locked: d.locked,
+      })),
+    }
+  }
+
+  const day = (itinerary.days_plan ?? []).find((d) => d.id === focusDay)
   return {
-    ...itinerary,
-    days_plan: itinerary.days_plan.map((d) =>
-      d.id === focusDay
-        ? d
-        : {
-            id: d.id,
-            day: d.day,
-            label: d.label,
-            title: d.title,
-            locked: d.locked,
-            places: (d.places || []).filter((p) => p.locked),
-          },
-    ),
+    ...base,
+    focus_day: focusDay,
+    days_plan: day ? [day] : [],
   }
 }
 
-function assertNoLockedMutation(before: Itinerary, after: Itinerary) {
-  if (before.stay?.locked) {
-    const b = JSON.stringify(pickStay(before.stay))
-    const a = JSON.stringify(pickStay(after.stay))
-    if (b !== a) throw new Error('locked stay mutated')
+function normalizeAiItinerary(
+  raw: Itinerary | undefined,
+  focusDay: string | null,
+): Itinerary | null {
+  if (!raw || !Array.isArray(raw.days_plan) || raw.days_plan.length === 0) {
+    return null
   }
 
-  for (const day of before.days_plan) {
-    const nextDay = after.days_plan.find((d) => d.id === day.id)
-    if (!nextDay) throw new Error(`missing day ${day.id}`)
-    if (day.locked) {
-      if (day.title !== nextDay.title || day.theme !== nextDay.theme) {
-        throw new Error(`locked day meta mutated: ${day.id}`)
+  const days = raw.days_plan.map((day, index) => {
+    const id =
+      day.id ||
+      (raw.days_plan!.length === 1 && focusDay ? focusDay : `day${index + 1}`)
+    const places = (Array.isArray(day.places) ? day.places : []).map((p, i) => ({
+      ...p,
+      order: p.order ?? i + 1,
+    }))
+    return { ...day, id, places }
+  })
+
+  if (focusDay && days.length === 1 && days[0].id !== focusDay) {
+    days[0] = { ...days[0], id: focusDay }
+  }
+
+  return { ...raw, days_plan: days }
+}
+
+function itinerariesEqual(a: Itinerary, b: Itinerary): boolean {
+  return JSON.stringify(a) === JSON.stringify(b)
+}
+
+function applyItineraryPatch(
+  before: Itinerary,
+  after: Itinerary,
+  focusDay: string | null,
+): Itinerary {
+  if (!focusDay) {
+    return mergeLockedItinerary(before, after)
+  }
+
+  const afterDay = (after.days_plan ?? []).find((d) => d.id === focusDay)
+  if (!afterDay) return before
+
+  return {
+    ...before,
+    days_plan: (before.days_plan ?? []).map((day) => {
+      if (day.id !== focusDay) return day
+      if (day.locked) {
+        return {
+          ...day,
+          summary: afterDay.summary ?? day.summary,
+          tips: afterDay.tips ?? day.tips,
+          places: mergeDayPlaces(day, afterDay),
+        }
       }
-    }
-    for (const place of day.places || []) {
-      if (!place.locked) continue
-      const nextPlace = (nextDay.places || []).find((p) => p.id === place.id)
-      if (!nextPlace) throw new Error(`locked place removed: ${place.id}`)
-      if (
-        place.name !== nextPlace.name ||
-        place.lat !== nextPlace.lat ||
-        place.lng !== nextPlace.lng ||
-        place.time !== nextPlace.time
-      ) {
-        throw new Error(`locked place mutated: ${place.id}`)
+      return {
+        ...day,
+        title: afterDay.title ?? day.title,
+        theme: afterDay.theme ?? day.theme,
+        summary: afterDay.summary ?? day.summary,
+        tips: afterDay.tips ?? day.tips,
+        places: afterDay.places ?? [],
       }
-    }
+    }),
   }
 }
 
-function pickStay(stay: Record<string, unknown> | undefined) {
-  if (!stay) return null
+function mergeLockedItinerary(before: Itinerary, after: Itinerary): Itinerary {
+  const afterDays = new Map((after.days_plan ?? []).map((d) => [d.id, d]))
+
   return {
-    name: stay.name,
-    address: stay.address,
-    lat: stay.lat,
-    lng: stay.lng,
-    locked: stay.locked,
+    ...after,
+    stay: before.stay?.locked ? { ...before.stay } : after.stay ?? before.stay,
+    constraints: before.constraints ?? after.constraints,
+    days_plan: (before.days_plan ?? []).map((day) => {
+      const afterDay = afterDays.get(day.id)
+      if (!afterDay) return { ...day }
+      if (!day.locked) return afterDay
+      return {
+        ...afterDay,
+        day: day.day,
+        date: day.date,
+        label: day.label,
+        title: day.title,
+        theme: day.theme,
+        locked: day.locked,
+        summary: day.summary,
+        tips: day.tips,
+        places: mergeDayPlaces(day, afterDay),
+      }
+    }),
   }
+}
+
+function mergeDayPlaces(
+  beforeDay: DayPlan,
+  afterDay: DayPlan,
+): Place[] {
+  const lockedIds = new Set(
+    (beforeDay.places || []).filter((p) => p.locked).map((p) => p.id),
+  )
+  const lockedPlaces = (beforeDay.places || []).filter((p) => p.locked)
+  const beforeUnlocked = (beforeDay.places || []).filter((p) => !p.locked)
+  const afterPlaces = afterDay.places || []
+  const afterById = new Map(
+    afterPlaces
+      .filter((p) => p.id && !lockedIds.has(p.id))
+      .map((p) => [p.id as string, p]),
+  )
+
+  const merged: Place[] = [...lockedPlaces]
+  for (const place of beforeUnlocked) {
+    const id = place.id
+    if (id && afterById.has(id)) {
+      merged.push(afterById.get(id)!)
+      afterById.delete(id)
+    } else {
+      merged.push(place)
+    }
+  }
+  for (const place of afterById.values()) {
+    merged.push(place)
+  }
+  for (const place of afterPlaces) {
+    if (!place.id && !place.locked) merged.push(place)
+  }
+
+  return merged.map((place, index) => ({ ...place, order: index + 1 }))
 }
