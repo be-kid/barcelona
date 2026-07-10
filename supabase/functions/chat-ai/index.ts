@@ -138,10 +138,11 @@ Deno.serve(async (req) => {
 규칙:
 1) locked:true 인 stay/place 는 기본적으로 바꾸지 마세요. (사용자가 "확정 취소/일정 변경"을 명시하면 해당 항목만 수정)
 2) focus_day가 있으면 그 날짜만 수정하세요. 다른 Day는 건드리지 마세요.
-3) 응답 JSON의 itinerary.days_plan[0].id 는 focus_day 와 같게 (예: "day4").
-4) 응답 형식: {"assistant_message":"...","itinerary":{"days_plan":[{...}]},"diff_summary":["..."],"needs_clarification":false}
-5) places 의 order는 1부터, lat/lng 포함. 좌표가 애매하면 needs_clarification=true 로 두고 itinerary는 기존 유지.
-6) assistant_message 는 비개발자용 한국어로만 작성. needs_clarification, lat, lng, JSON, itinerary 같은 기술 용어는 절대 쓰지 마세요.
+3) locked day 에서 순서를 바꿀 때는 days_plan[0].places 를 **시간순 전체 목록**(locked 포함)으로 보내세요.
+4) 응답 JSON의 itinerary.days_plan[0].id 는 focus_day 와 같게 (예: "day4").
+5) 응답 형식: {"assistant_message":"...","itinerary":{"days_plan":[{...}]},"diff_summary":["..."],"needs_clarification":false}
+6) places 의 order는 1부터, lat/lng 포함. 좌표가 애매하면 needs_clarification=true 로 두고 itinerary는 기존 유지.
+7) assistant_message 는 비개발자용 한국어로만 작성. needs_clarification, lat, lng, JSON, itinerary 같은 기술 용어는 절대 쓰지 마세요.
    위치가 불확실하면 예: "○○ 맞죠? 구글맵에 나오는 장소 이름(또는 주소)을 알려주시면 지도에 반영할게요." 처럼 친절히 질문하세요.
 constraints: ${(itinerary.constraints || []).join(' | ')}
 focus_day: ${focusDay || 'none'}`
@@ -450,34 +451,66 @@ function mergeDayPlaces(
   beforeDay: DayPlan,
   afterDay: DayPlan,
 ): Place[] {
-  const lockedIds = new Set(
-    (beforeDay.places || []).filter((p) => p.locked).map((p) => p.id),
-  )
-  const lockedPlaces = (beforeDay.places || []).filter((p) => p.locked)
-  const beforeUnlocked = (beforeDay.places || []).filter((p) => !p.locked)
+  const beforePlaces = beforeDay.places || []
   const afterPlaces = afterDay.places || []
-  const afterById = new Map(
-    afterPlaces
-      .filter((p) => p.id && !lockedIds.has(p.id))
-      .map((p) => [p.id as string, p]),
+  const beforeById = new Map(
+    beforePlaces.filter((p) => p.id).map((p) => [p.id as string, p]),
   )
 
-  const merged: Place[] = [...lockedPlaces]
-  for (const place of beforeUnlocked) {
-    const id = place.id
-    if (id && afterById.has(id)) {
-      merged.push(afterById.get(id)!)
-      afterById.delete(id)
-    } else {
-      merged.push(place)
-    }
-  }
-  for (const place of afterById.values()) {
-    merged.push(place)
-  }
-  for (const place of afterPlaces) {
-    if (!place.id && !place.locked) merged.push(place)
+  if (afterPlaces.length === 0) {
+    return beforePlaces.map((p, i) => ({ ...p, order: i + 1 }))
   }
 
-  return merged.map((place, index) => ({ ...place, order: index + 1 }))
+  const afterIds = new Set(
+    afterPlaces.map((p) => p.id).filter((id): id is string => Boolean(id)),
+  )
+  const lockedInBefore = beforePlaces.filter((p) => p.locked && p.id)
+  const looksLikeFullDay =
+    afterPlaces.length >= beforePlaces.length - 2 ||
+    (lockedInBefore.length > 0 &&
+      lockedInBefore.every((p) => afterIds.has(p.id as string)))
+
+  if (looksLikeFullDay) {
+    const merged: Place[] = []
+    const seen = new Set<string>()
+
+    for (const ap of afterPlaces) {
+      const id = ap.id
+      const bp = id ? beforeById.get(id) : undefined
+      if (bp?.locked) {
+        merged.push(bp)
+        seen.add(id!)
+      } else if (bp) {
+        merged.push({ ...bp, ...ap, locked: false })
+        seen.add(id!)
+      } else {
+        merged.push({ ...ap, locked: ap.locked ?? false })
+        if (id) seen.add(id)
+      }
+    }
+
+    for (const bp of beforePlaces) {
+      if (bp.locked && bp.id && !seen.has(bp.id)) merged.push(bp)
+    }
+
+    return merged.map((p, i) => ({ ...p, order: i + 1 }))
+  }
+
+  const afterById = new Map(
+    afterPlaces.filter((p) => p.id).map((p) => [p.id as string, p]),
+  )
+  const merged: Place[] = beforePlaces.map((place) => {
+    if (place.locked) return place
+    const id = place.id
+    return id && afterById.has(id)
+      ? { ...place, ...afterById.get(id)!, locked: false }
+      : place
+  })
+
+  for (const ap of afterPlaces) {
+    if (ap.id && beforeById.has(ap.id)) continue
+    merged.push(ap)
+  }
+
+  return merged.map((p, i) => ({ ...p, order: i + 1 }))
 }
