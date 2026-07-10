@@ -16,7 +16,15 @@ def main() -> None:
     data = json.loads(ITIN.read_text(encoding="utf-8"))
     payload = json.dumps(data, ensure_ascii=False).replace("'", "''")
     sql = f"""-- Auto-generated from data/itinerary.json
--- Replace OWNER membership first (see seed/README.md)
+-- Run in Supabase SQL Editor (trips row required before itineraries FK)
+
+insert into public.trips (id, slug, title)
+values (
+  '{TRIP_ID}',
+  'barcelona-2026',
+  '바르셀로나 5박 6일'
+)
+on conflict (id) do nothing;
 
 insert into public.itineraries (trip_id, data, version)
 values (

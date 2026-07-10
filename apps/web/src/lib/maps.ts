@@ -9,9 +9,10 @@ export function mapsPlaceUrl(place: Pick<Place, 'name' | 'name_en' | 'lat' | 'ln
 }
 
 export function mapsDayUrl(itinerary: Itinerary, dayId: string): string {
-  const day = itinerary.days_plan.find((d) => d.id === dayId)
+  const days = itinerary.days_plan ?? []
+  const day = days.find((d) => d.id === dayId)
   if (!day) return 'https://www.google.com/maps'
-  const route = day.places.filter(
+  const route = (day.places ?? []).filter(
     (p) => p.lat != null && p.lng != null && !p.exclude_from_route,
   )
   if (route.length < 2) {
@@ -34,15 +35,16 @@ export function mapsDayUrl(itinerary: Itinerary, dayId: string): string {
 }
 
 export function enrichItinerary(data: Itinerary): Itinerary {
+  const days = data.days_plan ?? []
   return {
     ...data,
     stay: data.stay
       ? { ...data.stay, google_maps: mapsPlaceUrl(data.stay) }
       : data.stay,
-    days_plan: data.days_plan.map((day) => ({
+    days_plan: days.map((day) => ({
       ...day,
-      google_maps_directions: mapsDayUrl(data, day.id),
-      places: day.places.map((p) => ({
+      google_maps_directions: mapsDayUrl({ ...data, days_plan: days }, day.id),
+      places: (day.places ?? []).map((p) => ({
         ...p,
         google_maps: p.lat != null ? mapsPlaceUrl(p) : undefined,
       })),

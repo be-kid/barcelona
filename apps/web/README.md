@@ -8,24 +8,14 @@ npm install
 npm run dev
 ```
 
-- 왼쪽: 일정 / 가운데: 지도 / 오른쪽: 채팅
-- Supabase·OpenAI 키가 없으면 **목업 AI**로 동작
-- 일정은 `public/itinerary.json` (레포 `data/itinerary.json` 복사본)
+- Supabase env가 **없으면** 로그인 없이 **목업 AI**로 동작
+- 일정: `public/itinerary.json`
 
-목업에서 시험해 볼 말:
-- `점심 채워줘`
-- `저녁 타파스`
-- `해변 넣어줘`
-- `몬주익`
+## Supabase + 매직 링크
 
-## Supabase + OpenAI 연결
-
-1. Supabase 프로젝트 생성 후 `supabase/migrations/001_init.sql` 적용  
-2. Realtime에 `itineraries`, `messages` 추가  
-3. `python3 scripts/generate_seed_sql.py` 후 seed SQL 실행 + 멤버 UUID 채우기  
-4. `supabase secrets set OPENAI_API_KEY=...`  
-5. `supabase functions deploy chat-ai`  
-6. `apps/web/.env.local`:
+1. Supabase 프로젝트 + 마이그레이션 (`001`, `002`)  
+2. `.env.local` 설정 (아래)  
+3. Dashboard에서 Email Auth·Redirect URL 설정 — 자세히: [`docs/auth-magic-link.md`](../../docs/auth-magic-link.md)
 
 ```
 VITE_SUPABASE_URL=https://xxxx.supabase.co
@@ -34,7 +24,19 @@ VITE_TRIP_ID=11111111-1111-1111-1111-111111111111
 VITE_USE_MOCK_AI=false
 ```
 
-7. 매직 링크로 로그인(추후 UI) — 현재 Function은 JWT membership 검사
+### 로그인 흐름
+1. 이메일 입력 → 메일 링크 클릭  
+2. 초대 코드 입력 (`trips.invite_code`) — 둘 다 같은 코드  
+3. 멤버면 지도·채팅·AI 사용  
+
+Owner를 SQL로 미리 넣으면 초대 코드 단계 생략 가능.
+
+## OpenAI
+
+```bash
+supabase secrets set OPENAI_API_KEY=...
+supabase functions deploy chat-ai
+```
 
 ## 일정 JSON 갱신
 

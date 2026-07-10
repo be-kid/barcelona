@@ -84,18 +84,9 @@ create policy "owner insert trips"
 
 create policy "members read members"
   on public.trip_members for select
-  using (public.is_trip_member(trip_id));
+  using (user_id = auth.uid());
 
-create policy "owner manage members"
-  on public.trip_members for all
-  using (
-    exists (
-      select 1 from public.trip_members m
-      where m.trip_id = trip_members.trip_id
-        and m.user_id = auth.uid()
-        and m.role = 'owner'
-    )
-  );
+-- owner manage: use SQL editor / service role for now (avoid recursive subquery on trip_members)
 
 create policy "members read itinerary"
   on public.itineraries for select

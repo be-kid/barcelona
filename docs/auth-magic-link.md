@@ -1,0 +1,84 @@
+# 매직 링크 로그인 설정
+
+커플 2명만 들어오게: **Supabase Auth 매직 링크** + **trip_members** + **초대 코드**.
+
+## 1. Supabase Dashboard
+
+### Authentication → Providers
+- **Email** 켜기
+- **Confirm email** — 개발 중에는 끄면 편함 (링크만으로 바로 입장)
+- **Magic Link** 사용 (기본 OTP)
+
+### Authentication → URL Configuration
+| 항목 | 값 |
+|------|-----|
+| Site URL | `http://localhost:5173` (배포 후 프로덕션 URL) |
+| Redirect URLs | `http://localhost:5173/**`, `https://your-app.vercel.app/**` |
+
+## 2. DB
+
+```bash
+# SQL Editor에서 순서대로 Run
+supabase/migrations/001_init.sql
+supabase/migrations/002_join_invite.sql
+supabase/migrations/003_fix_invite_join.sql
+supabase/migrations/004_fix_trip_members_rls.sql   # infinite recursion 수정
+python3 scripts/generate_seed_sql.py
+# supabase/seed/002_itinerary_data.sql + trips insert
+```
+
+`infinite recursion detected in policy for relation "trip_members"` 가 나오면 **004** SQL을 실행하세요.
+
+### Realtime (둘이 동시에 보기)
+
+**방법 A — Dashboard (쉬움)**  
+Database → **Tables** → `itineraries` → Realtime **ON**  
+같게 `messages` 테이블도 Realtime **ON**
+
+**방법 B — SQL Editor**
+
+```sql
+-- supabase/migrations/005_enable_realtime.sql
+alter publication supabase_realtime add table public.itineraries;
+alter publication supabase_realtime add table public.messages;
+```
+
+로컬에서 채팅은 API 응답으로 바로 보이므로 Realtime 없어도 됩니다.  
+**여친 화면에 내 채팅·일정이 실시간 반영**되려면 위 설정 필요.
+
+`trips.invite_code` — 여친에게 공유할 코드 (Dashboard에서 확인 가능)
+
+## 3. 앱 `.env.local`
+
+```
+VITE_SUPABASE_URL=https://xxxx.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJ...
+VITE_TRIP_ID=11111111-1111-1111-1111-111111111111
+VITE_USE_MOCK_AI=false
+```
+
+## 4. 사용자 흐름
+
+1. **나**: 이메일 → 메일 링크 클릭 → 초대 코드 입력 (또는 SQL로 owner 미리 등록)
+2. **여친**: 같은 URL → 이메일 → 링크 → **같은 초대 코드** 입력
+3. 둘 다 `trip_members`에 있으면 일정·채팅·AI 사용
+
+## 5. Owner를 SQL로 미리 넣기 (선택)
+
+매직 링크로 한 번 로그인한 뒤 Supabase → Authentication → Users 에서 UUID 복사:
+
+```sql
+insert into public.trip_members (trip_id, user_id, role, display_name)
+values (
+  '11111111-1111-1111-1111-111111111111',
+  'YOUR-USER-UUID',
+  'owner',
+  'Lee'
+);
+```
+
+이렇게 하면 초대 코드 화면 없이 바로 앱 진입.
+
+## 비용
+
+매직 링크 / Auth MAU — **커플 2명이면 무료 티어 안** (별도 링크당 과금 없음).

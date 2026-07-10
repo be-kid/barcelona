@@ -37,6 +37,12 @@ export function ChatPanel({ messages, focusDay, dayLabel, busy, onSend }: Props)
             : 'AI 편집 · focus: '}
           <code>{focusDay}</code>
         </p>
+        {!useMockAi ? (
+          <p className="chat-hint">
+            고정(🔒) 일정은 「투어 취소했어」「이거 바꿔줘」처럼 <strong>명시</strong>해야 바뀝니다.
+            비어 있는 Day·미정 슬롯은 지금 선택한 Day에서 자유롭게 채우면 됩니다.
+          </p>
+        ) : null}
       </header>
 
       <div className="chat-log">

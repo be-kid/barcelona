@@ -1,5 +1,13 @@
 -- Auto-generated from data/itinerary.json
--- Replace OWNER membership first (see seed/README.md)
+-- Run in Supabase SQL Editor (trips row required before itineraries FK)
+
+insert into public.trips (id, slug, title)
+values (
+  '11111111-1111-1111-1111-111111111111',
+  'barcelona-2026',
+  '바르셀로나 5박 6일'
+)
+on conflict (id) do nothing;
 
 insert into public.itineraries (trip_id, data, version)
 values (
