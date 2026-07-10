@@ -18,12 +18,16 @@
 ## 2. DB
 
 ```bash
-# SQL Editor에서 순서대로
+# SQL Editor에서 순서대로 Run
 supabase/migrations/001_init.sql
 supabase/migrations/002_join_invite.sql
+supabase/migrations/003_fix_invite_join.sql
+supabase/migrations/004_fix_trip_members_rls.sql   # infinite recursion 수정
 python3 scripts/generate_seed_sql.py
-# supabase/seed/002_itinerary_data.sql + trips/members 시드
+# supabase/seed/002_itinerary_data.sql + trips insert
 ```
+
+`infinite recursion detected in policy for relation "trip_members"` 가 나오면 **004** SQL을 실행하세요.
 
 `trips.invite_code` — 여친에게 공유할 코드 (Dashboard에서 확인 가능)
 
