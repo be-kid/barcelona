@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { ChatPanel } from './components/ChatPanel'
+import { InviteJoinPage } from './components/InviteJoinPage'
 import { ItineraryPanel } from './components/ItineraryPanel'
+import { LoginPage } from './components/LoginPage'
 import { MapView } from './components/MapView'
+import { useAuth } from './hooks/useAuth'
 import {
   loadItinerary,
   loadMessages,
@@ -9,7 +12,7 @@ import {
   subscribeItinerary,
   subscribeMessages,
 } from './lib/api'
-import { useMockAi } from './lib/supabase'
+import { signOut, useMockAi, type TripMembership } from './lib/supabase'
 import type { ChatMessage, Itinerary } from './types'
 import './App.css'
 
@@ -17,7 +20,13 @@ function uid() {
   return crypto.randomUUID()
 }
 
-export default function App() {
+function PlannerApp({
+  membership,
+  userEmail,
+}: {
+  membership: TripMembership | null
+  userEmail?: string
+}) {
   const [itinerary, setItinerary] = useState<Itinerary | null>(null)
   const [dayId, setDayId] = useState('day1')
   const [focusPlaceId, setFocusPlaceId] = useState<string | null>(null)
@@ -114,6 +123,8 @@ export default function App() {
     )
   }
 
+  const displayName = membership?.display_name || userEmail?.split('@')[0] || '나'
+
   return (
     <div className="app-shell">
       <ItineraryPanel
@@ -121,6 +132,8 @@ export default function App() {
         dayId={day.id}
         onSelectDay={setDayId}
         onFocusPlace={setFocusPlaceId}
+        userLabel={displayName}
+        onSignOut={membership ? () => void signOut() : undefined}
       />
       <main className="map-pane">
         <MapView day={day} stay={itinerary.stay} focusPlaceId={focusPlaceId} />
@@ -136,4 +149,44 @@ export default function App() {
       />
     </div>
   )
+}
+
+export default function App() {
+  const { auth, recheck } = useAuth()
+
+  if (auth.status === 'loading') {
+    return (
+      <div className="boot-error">
+        <p>확인 중…</p>
+      </div>
+    )
+  }
+
+  if (auth.status === 'no_supabase') {
+    return <PlannerApp membership={null} />
+  }
+
+  if (auth.status === 'anonymous') {
+    return <LoginPage />
+  }
+
+  if (auth.status === 'needs_invite') {
+    return (
+      <InviteJoinPage
+        email={auth.email}
+        onJoined={() => void recheck()}
+      />
+    )
+  }
+
+  if (auth.status === 'authenticated') {
+    return (
+      <PlannerApp
+        membership={auth.membership}
+        userEmail={auth.session.user.email}
+      />
+    )
+  }
+
+  return null
 }

@@ -5,6 +5,8 @@ type Props = {
   dayId: string
   onSelectDay: (id: string) => void
   onFocusPlace: (id: string) => void
+  userLabel?: string
+  onSignOut?: () => void
 }
 
 function PlaceRow({
@@ -89,18 +91,33 @@ function DayBody({ day, onFocusPlace }: { day: DayPlan; onFocusPlace: (id: strin
   )
 }
 
-export function ItineraryPanel({ itinerary, dayId, onSelectDay, onFocusPlace }: Props) {
+export function ItineraryPanel({
+  itinerary,
+  dayId,
+  onSelectDay,
+  onFocusPlace,
+  userLabel,
+  onSignOut,
+}: Props) {
   const day = itinerary.days_plan.find((d) => d.id === dayId) || itinerary.days_plan[0]
   const stay = itinerary.stay
 
   return (
     <aside className="panel itinerary-panel">
       <header className="panel-head">
-        <p className="eyebrow">
-          {itinerary.city} · {itinerary.nights}N/{itinerary.days}D
-        </p>
+        <div className="panel-head-row">
+          <p className="eyebrow">
+            {itinerary.city} · {itinerary.nights}N/{itinerary.days}D
+          </p>
+          {userLabel ? <span className="user-chip">{userLabel}</span> : null}
+        </div>
         <h1 className="brand">{itinerary.title}</h1>
         <p className="lede">{itinerary.share?.note || '일정 패널'}</p>
+        {onSignOut ? (
+          <button type="button" className="btn ghost signout" onClick={onSignOut}>
+            로그아웃
+          </button>
+        ) : null}
         {stay ? (
           <div className="stay">
             <strong>
