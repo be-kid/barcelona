@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { joinTripWithInvite, signOut, tripId } from '../lib/supabase'
+import { joinTripWithInvite, signOut } from '../lib/supabase'
 import { formatSupabaseError } from '../lib/errors'
 
 type Props = {
@@ -34,7 +34,7 @@ export function InviteJoinPage({ email, onJoined }: Props) {
         <p className="eyebrow">거의 다 왔어요</p>
         <h1 className="brand">초대 코드</h1>
         <p className="lede">
-          <strong>{email}</strong> 로 로그인됐어요. 이 trip은 초대된 사람만 볼 수 있어요.
+          <strong>{email}</strong> 로 로그인됐어요. 초대 코드는 같이 여행 짜는 사람에게 받으면 됩니다.
         </p>
 
         <form className="auth-form" onSubmit={submit}>
@@ -67,11 +67,6 @@ export function InviteJoinPage({ email, onJoined }: Props) {
         <button type="button" className="btn ghost block" onClick={() => void signOut()}>
           다른 이메일로 로그인
         </button>
-
-        <p className="auth-foot">
-          trip id: <code>{tripId || '(없음)'}</code> · SQL:{' '}
-          <code>select id, invite_code from trips;</code>
-        </p>
       </div>
     </div>
   )

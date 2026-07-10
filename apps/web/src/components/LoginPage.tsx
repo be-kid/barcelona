@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { signInWithMagicLink, tripId } from '../lib/supabase'
+import { signInWithMagicLink } from '../lib/supabase'
 
 type Props = {
   onSent?: (email: string) => void
@@ -63,14 +63,6 @@ export function LoginPage({ onSent }: Props) {
         )}
 
         {error ? <p className="auth-error">{error}</p> : null}
-
-        <p className="auth-foot">
-          앱 trip id: <code>{tripId || '(없음)'}</code>
-          <br />
-          Supabase SQL에서 <code>select id, invite_code from trips;</code> 와 id·코드가
-          일치해야 합니다. <code>002_join_invite.sql</code> /{' '}
-          <code>003_fix_invite_join.sql</code> 실행 여부도 확인하세요.
-        </p>
       </div>
     </div>
   )

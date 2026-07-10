@@ -30,7 +30,7 @@ export function ChatPanel({ messages, focusDay, dayLabel, busy, onSend }: Props)
     <aside className="panel chat-panel">
       <header className="panel-head chat-head">
         <p className="eyebrow">Chat · {dayLabel}</p>
-        <h2 className="brand small">같이 짜기</h2>
+        <h2 className="brand small">일정 짜기</h2>
         <p className="lede">
           {useMockAi
             ? '목업 AI 모드 (Supabase/OpenAI 키 없이 UI 개발용). focus: '
