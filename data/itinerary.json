@@ -34,7 +34,8 @@
     "숙소(Carrer de Provença 205)는 locked — 변경 금지",
     "Day2 가우디 투어 07:50–13:50 동선·시간 locked",
     "Day2 사그라다 내부 투어 16:00–17:00 locked",
-    "출국 시각은 미확정 — 확인 후 dates.departure 업데이트"
+    "출국 시각은 미확정 — 확인 후 dates.departure 업데이트",
+    "Day3 지로나는 검토 중(해변 아님). 확정/해변 변경 가능"
   ],
   "assumptions": {
     "base": "Carrer de Provença 205 (에이샴플레) 숙소 기준",
@@ -229,15 +230,125 @@
       "day": 3,
       "date": "2026-09-02",
       "label": "Day 3 · 9/2",
-      "title": "미정",
-      "theme": "아직 비움 — 같이 채우기",
+      "title": "지로나 당일치기",
+      "theme": "중세 구시가지 (해변 아님 · 검토 중)",
       "locked": false,
-      "summary": "확정 일정 없음. 구시가지·해변·몬주익 등 취향 맞춰 채울 날.",
+      "summary": "지로나(Girona)는 바다가 아니라 내륙 중세 도시. 바르셀로나에서 고속열차 약 40분이면 도착. 구시가지·대성당·유대인 지구·오냐르 강변 산책이 핵심. 해변을 원하면 코스타 브라바(토사 데 마르 등)로 바꾸는 게 맞음.",
       "tips": [
-        "전날 가우디 투어가 길었으니 오전은 여유 있게도 가능.",
-        "원하면 고딕/보른, 바르셀로네타, 몬주익 중 테마부터 정해 보자."
+        "참고: 지로나 ≠ 해변. 해변 당일치기는 Sitges / Costa Brava(Tossa de Mar 등).",
+        "열차: Barcelona-Sants → Girona (AVE/Avant 약 38–40분). Renfe 사전 예매 권장.",
+        "역에서 구시가지까지 도보 약 10–15분.",
+        "전날 가우디 투어가 길었으니 아침 열차는 너무 일찍 잡지 않아도 됨.",
+        "아직 확정 아님 — 가고 싶으면 locked로 올리고, 해변으로 바꾸면 말해 주세요."
       ],
-      "places": []
+      "places": [
+        {
+          "id": "d3_sants",
+          "order": 1,
+          "name": "바르셀로나 산츠 역",
+          "name_en": "Barcelona Sants Station",
+          "lat": 41.3790068,
+          "lng": 2.1400042,
+          "time": "오전",
+          "duration": "-",
+          "note": "지로나행 열차 탑승. 숙소(프로벤사)에서 메트로/도보+메트로로 이동.",
+          "locked": false,
+          "source": "imported"
+        },
+        {
+          "id": "d3_girona_station",
+          "order": 2,
+          "name": "지로나 역",
+          "name_en": "Estació de Girona",
+          "lat": 41.9794651,
+          "lng": 2.8167745,
+          "time": "오전",
+          "duration": "도착",
+          "note": "구시가지까지 도보 10–15분.",
+          "locked": false,
+          "source": "imported"
+        },
+        {
+          "id": "d3_onyar",
+          "order": 3,
+          "name": "오냐르 강 · 색색 집들",
+          "name_en": "Pont de Sant Agustí / Onyar River houses",
+          "lat": 41.9854374,
+          "lng": 2.8243548,
+          "time": "오전~점심",
+          "duration": "30분",
+          "note": "지로나 대표 포토 스팟. 강변 다리에서 사진.",
+          "locked": false,
+          "source": "imported"
+        },
+        {
+          "id": "d3_call",
+          "order": 4,
+          "name": "유대인 지구 (엘 카이)",
+          "name_en": "El Call (Jewish Quarter)",
+          "lat": 41.9858,
+          "lng": 2.8249,
+          "time": "오전~오후",
+          "duration": "45–60분",
+          "note": "유럽에서 잘 보존된 유대인 지구. 골목 산책.",
+          "locked": false,
+          "source": "imported"
+        },
+        {
+          "id": "d3_cathedral",
+          "order": 5,
+          "name": "지로나 대성당",
+          "name_en": "Girona Cathedral",
+          "lat": 41.9864268,
+          "lng": 2.8253485,
+          "time": "오후",
+          "duration": "45–60분",
+          "note": "긴 계단이 포인트. 내부는 취향에 따라.",
+          "locked": false,
+          "source": "imported"
+        },
+        {
+          "id": "d3_baths",
+          "order": 6,
+          "name": "아랍 목욕탕",
+          "name_en": "Banys Àrabs",
+          "lat": 41.9880582,
+          "lng": 2.8257024,
+          "time": "오후",
+          "duration": "30분",
+          "note": "작지만 분위기 좋음. 시간이 없으면 패스 가능.",
+          "locked": false,
+          "optional": true,
+          "source": "imported"
+        },
+        {
+          "id": "d3_lunch",
+          "order": 7,
+          "name": "점심 (미정)",
+          "name_en": null,
+          "lat": null,
+          "lng": null,
+          "time": "점심",
+          "duration": "60–90분",
+          "note": "구시가지·강변 식당. 채울 슬롯.",
+          "slot": "lunch",
+          "locked": false,
+          "source": "ai_fill"
+        },
+        {
+          "id": "d3_return",
+          "order": 8,
+          "name": "지로나 → 바르셀로나 복귀",
+          "name_en": "Return train to Barcelona",
+          "lat": 41.9794651,
+          "lng": 2.8167745,
+          "time": "저녁",
+          "duration": "열차 ~40분",
+          "note": "산츠 역 도착 후 숙소로.",
+          "locked": false,
+          "source": "imported"
+        }
+      ]
     },
     {
       "id": "day4",

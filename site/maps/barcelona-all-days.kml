@@ -57,8 +57,49 @@
       </Placemark>
     </Folder>
     <Folder>
-      <name>Day 3 · 9/2 · 미정</name>
-
+      <name>Day 3 · 9/2 · 지로나 당일치기</name>
+      <Placemark>
+        <name>1. 바르셀로나 산츠 역</name>
+        <description>오전 · -
+지로나행 열차 탑승. 숙소(프로벤사)에서 메트로/도보+메트로로 이동.</description>
+        <Point><coordinates>2.1400042,41.3790068,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>2. 지로나 역</name>
+        <description>오전 · 도착
+구시가지까지 도보 10–15분.</description>
+        <Point><coordinates>2.8167745,41.9794651,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>3. 오냐르 강 · 색색 집들</name>
+        <description>오전~점심 · 30분
+지로나 대표 포토 스팟. 강변 다리에서 사진.</description>
+        <Point><coordinates>2.8243548,41.9854374,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>4. 유대인 지구 (엘 카이)</name>
+        <description>오전~오후 · 45–60분
+유럽에서 잘 보존된 유대인 지구. 골목 산책.</description>
+        <Point><coordinates>2.8249,41.9858,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>5. 지로나 대성당</name>
+        <description>오후 · 45–60분
+긴 계단이 포인트. 내부는 취향에 따라.</description>
+        <Point><coordinates>2.8253485,41.9864268,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>6. 아랍 목욕탕</name>
+        <description>오후 · 30분
+작지만 분위기 좋음. 시간이 없으면 패스 가능.</description>
+        <Point><coordinates>2.8257024,41.9880582,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>8. 지로나 → 바르셀로나 복귀</name>
+        <description>저녁 · 열차 ~40분
+산츠 역 도착 후 숙소로.</description>
+        <Point><coordinates>2.8167745,41.9794651,0</coordinates></Point>
+      </Placemark>
     </Folder>
     <Folder>
       <name>Day 4 · 9/3 · 미정</name>
