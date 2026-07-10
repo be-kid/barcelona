@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { joinTripWithInvite, signOut } from '../lib/supabase'
+import { joinTripWithInvite, signOut, tripId } from '../lib/supabase'
+import { formatSupabaseError } from '../lib/errors'
 
 type Props = {
   email: string
@@ -21,11 +22,7 @@ export function InviteJoinPage({ email, onJoined }: Props) {
       await joinTripWithInvite(code, name || undefined)
       onJoined()
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : '초대 코드가 맞지 않거나 이미 2명이 가득 찼어요.',
-      )
+      setError(formatSupabaseError(err))
     } finally {
       setBusy(false)
     }
@@ -70,6 +67,11 @@ export function InviteJoinPage({ email, onJoined }: Props) {
         <button type="button" className="btn ghost block" onClick={() => void signOut()}>
           다른 이메일로 로그인
         </button>
+
+        <p className="auth-foot">
+          trip id: <code>{tripId || '(없음)'}</code> · SQL:{' '}
+          <code>select id, invite_code from trips;</code>
+        </p>
       </div>
     </div>
   )

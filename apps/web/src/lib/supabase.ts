@@ -1,4 +1,5 @@
 import { createClient, type Session, type SupabaseClient } from '@supabase/supabase-js'
+import { formatSupabaseError } from './errors'
 
 const url = import.meta.env.VITE_SUPABASE_URL
 const anon = import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -56,18 +57,35 @@ export async function getTripMembership(userId: string): Promise<TripMembership 
     .eq('trip_id', tripId)
     .eq('user_id', userId)
     .maybeSingle()
-  if (error || !data) return null
+  if (error) {
+    console.error('getTripMembership', error)
+    throw new Error(formatSupabaseError(error))
+  }
+  if (!data) return null
   return data as TripMembership
 }
 
 export async function joinTripWithInvite(inviteCode: string, displayName?: string): Promise<void> {
-  if (!supabase || !tripId) throw new Error('Supabase trip 설정이 없습니다.')
+  if (!supabase || !tripId) {
+    throw new Error('VITE_TRIP_ID가 .env.local에 없습니다.')
+  }
   const { error } = await supabase.rpc('join_trip_with_invite', {
     p_trip_id: tripId,
     p_invite_code: inviteCode.trim(),
     p_display_name: displayName?.trim() || null,
   })
-  if (error) throw error
+  if (error) throw new Error(formatSupabaseError(error))
+
+  const { data: user } = await supabase.auth.getUser()
+  const uid = user.user?.id
+  if (!uid) throw new Error('로그인 세션이 없습니다.')
+
+  const membership = await getTripMembership(uid)
+  if (!membership) {
+    throw new Error(
+      '가입은 됐을 수 있지만 멤버 확인에 실패했어요. VITE_TRIP_ID가 Supabase trips.id와 같은지 확인하세요.',
+    )
+  }
 }
 
 export async function getTripInviteHint(): Promise<string | null> {

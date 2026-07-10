@@ -17,9 +17,13 @@ export type AuthState =
 
 async function resolveAuth(session: Session | null): Promise<AuthState> {
   if (!session?.user) return { status: 'anonymous' }
-  const membership = await getTripMembership(session.user.id)
-  if (membership) {
-    return { status: 'authenticated', session, membership }
+  try {
+    const membership = await getTripMembership(session.user.id)
+    if (membership) {
+      return { status: 'authenticated', session, membership }
+    }
+  } catch (e) {
+    console.error('resolveAuth membership', e)
   }
   return {
     status: 'needs_invite',
