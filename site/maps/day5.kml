@@ -1,9 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>Day 5 · 9/4 · 미정</name>
-    <description>확정 일정 없음. 출국 전날.</description>
-
-
+    <name>Day 5 · 9/4 금 · 쇼핑 · 먹부림</name>
+    <description>Hofmann으로 시작해 그라시아 거리와 백화점·마트를 둘러보고 Vinitus와 Bilmonte로 마무리합니다.</description>
+    <Placemark>
+      <name>1. Hofmann Turó Park</name>
+      <description>08:30–09:30 · 약 1시간
+마스카르포네 크루아상과 커피. 좌석 예약보다는 오전 방문.</description>
+      <Point><coordinates>2.143442,41.39257,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>2. Casa Batlló Gold</name>
+      <description>10시대 선택 · 약 1시간 15분
+내부 관람이 중요할 때만 시간 지정 티켓 예매.</description>
+      <Point><coordinates>2.16495,41.39165,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>3. Passeig de Gràcia 쇼핑</name>
+      <description>10:00–13:30 · 약 3시간 30분
+Zara·Massimo Dutti·Camper·Thinking MU와 가우디 건축물 외관.</description>
+      <Point><coordinates>2.164813,41.393424,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>4. 메뉴 델 디아 점심</name>
+      <description>13:30–14:30 · 약 1시간
+쇼핑 동선에서 당일 메뉴가 좋은 식당을 선택.</description>
+      <Point><coordinates>2.16827,41.39075,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>5. El Corte Inglés</name>
+      <description>15:00–16:00 · 약 1시간
+쇼핑과 상층 푸드코트·전망.</description>
+      <Point><coordinates>2.170069,41.387323,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>6. Mercadona</name>
+      <description>16:00–17:00 · 약 1시간
+과자·초콜릿·올리브 등 포장 간식과 기념품 쇼핑.</description>
+      <Point><coordinates>2.176183,41.390147,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>7. 숙소 휴식 · 짐 정리</name>
+      <description>17:30–19:00 · 약 90분
+쇼핑한 물건을 정리하고 저녁 전 휴식.</description>
+      <Point><coordinates>2.1578355,41.3921707,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>8. Vinitus</name>
+      <description>19:30–21:30 · 약 2시간
+예약 없이 방문. 저녁 피크 전에 도착해 대기시간을 줄입니다.</description>
+      <Point><coordinates>2.165765,41.390702,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>9. Bilmonte Gelato</name>
+      <description>21:30 이후 · 약 30분
+피스타치오·헤이즐넛 젤라토. 당일 영업시간 재확인.</description>
+      <Point><coordinates>2.162488,41.389754,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>Day 5 · 9/4 금 route</name>
+      <Style>
+        <LineStyle><color>ff2a6fdb</color><width>4</width></LineStyle>
+      </Style>
+      <LineString>
+        <tessellate>1</tessellate>
+        <coordinates>2.143442,41.39257,0 2.16495,41.39165,0 2.164813,41.393424,0 2.16827,41.39075,0 2.170069,41.387323,0 2.176183,41.390147,0 2.1578355,41.3921707,0 2.165765,41.390702,0 2.162488,41.389754,0</coordinates>
+      </LineString>
+    </Placemark>
   </Document>
 </kml>

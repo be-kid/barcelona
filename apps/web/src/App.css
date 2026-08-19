@@ -146,6 +146,32 @@ body {
   color: #9a6418;
 }
 
+.badge.booked {
+  background: rgba(36, 112, 74, 0.14);
+  color: #24704a;
+}
+
+.badge.recommended {
+  background: rgba(154, 100, 24, 0.14);
+  color: #9a6418;
+}
+
+.badge.walkin {
+  background: rgba(109, 74, 160, 0.12);
+  color: #6d4aa0;
+}
+
+.badge.check {
+  background: rgba(163, 59, 50, 0.12);
+  color: #a33b32;
+}
+
+.badge.optional,
+.badge.none {
+  background: rgba(92, 102, 120, 0.1);
+  color: var(--muted);
+}
+
 .day-tabs {
   display: flex;
   gap: 0.35rem;
@@ -239,6 +265,15 @@ body {
 .place h3 {
   margin: 0;
   font-size: 0.92rem;
+}
+
+.place-status {
+  display: flex;
+  margin-top: 0.25rem;
+}
+
+.place-status .badge {
+  margin-left: 0;
 }
 
 .meta {

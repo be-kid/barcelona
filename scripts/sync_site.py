@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "itinerary.json"
 SITE = ROOT / "site"
 MAPS = ROOT / "maps"
+WEB_PUBLIC = ROOT / "apps" / "web" / "public"
 
 
 def maps_place_url(place: dict) -> str:
@@ -89,13 +90,18 @@ def main() -> None:
         json.dumps(enriched, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
+    if WEB_PUBLIC.exists():
+        (WEB_PUBLIC / "itinerary.json").write_text(
+            json.dumps(enriched, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+
     if MAPS.exists():
         dest = SITE / "maps"
         if dest.exists():
             shutil.rmtree(dest)
         shutil.copytree(MAPS, dest)
 
-    print(f"Synced → {SITE}/ (itinerary + maps)")
+    print(f"Synced → {SITE}/ + {WEB_PUBLIC}/itinerary.json")
 
 
 if __name__ == "__main__":

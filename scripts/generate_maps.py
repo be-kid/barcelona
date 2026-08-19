@@ -81,7 +81,7 @@ def maps_dir_api_url(places: list[dict], travelmode: str = "walking") -> str:
 
 def write_csv(day: dict, path: Path) -> None:
     with path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow(["name", "description", "latitude", "longitude", "order", "time"])
         for p in day["places"]:
             if p.get("lat") is None or p.get("lng") is None:
@@ -205,9 +205,9 @@ def write_day_markdown(day: dict, dir_url: str, path: Path) -> None:
         lock = " *(고정)*" if p.get("locked") else ""
         tbd = " *(미정)*" if p.get("lat") is None else ""
         lines.append(
-            f"{p['order']}. **{p['name']}**{lock}{opt}{tbd} — {p.get('time', '')} · {p.get('duration', '')}  "
+            f"{p['order']}. **{p['name']}**{lock}{opt}{tbd} — {p.get('time', '')} · {p.get('duration', '')}"
         )
-        lines.append(f"   {p.get('note', '')}  ")
+        lines.append(f"   {p.get('note', '')}")
         if pin:
             lines.append(f"   [지도에서 보기]({pin})")
         lines.append("")
@@ -259,7 +259,7 @@ def main() -> None:
 
     # Combined CSV for My Maps (all days, with day column)
     with (MAPS / "barcelona-all-days.csv").open("w", newline="", encoding="utf-8") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow(["name", "description", "latitude", "longitude", "day", "order"])
         for day in data["days_plan"]:
             for p in day["places"]:

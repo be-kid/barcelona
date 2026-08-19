@@ -24,6 +24,13 @@ export interface Place {
   exclude_from_route?: boolean
   source?: string
   google_maps?: string
+  reservation_status?:
+    | 'booked'
+    | 'recommended'
+    | 'walk_in'
+    | 'check'
+    | 'optional'
+    | 'none'
 }
 
 export interface DayPlan {

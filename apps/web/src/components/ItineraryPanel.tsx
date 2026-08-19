@@ -1,5 +1,14 @@
 import type { DayPlan, Itinerary, Place } from '../types'
 
+const reservationLabels = {
+  booked: ['예약 완료', 'booked'],
+  recommended: ['예약 권장', 'recommended'],
+  walk_in: ['워크인', 'walkin'],
+  check: ['확인 필요', 'check'],
+  optional: ['선택', 'optional'],
+  none: ['예약 불필요', 'none'],
+} as const
+
 type Props = {
   itinerary: Itinerary
   dayId: string
@@ -26,6 +35,13 @@ function PlaceRow({
           {place.optional ? <span className="badge opt">선택</span> : null}
           {place.lat == null ? <span className="badge opt">미정</span> : null}
         </h3>
+        {place.reservation_status ? (
+          <div className="place-status">
+            <span className={`badge ${reservationLabels[place.reservation_status][1]}`}>
+              {reservationLabels[place.reservation_status][0]}
+            </span>
+          </div>
+        ) : null}
         <p className="meta">
           {place.time || ''} · {place.duration || ''}
         </p>

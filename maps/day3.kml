@@ -1,58 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>Day 3 · 9/2 · 지로나 당일치기</name>
-    <description>지로나(Girona)는 바다가 아니라 내륙 중세 도시. 바르셀로나에서 고속열차 약 40분이면 도착. 구시가지·대성당·유대인 지구·오냐르 강변 산책이 핵심. 해변을 원하면 코스타 브라바(토사 데 마르 등)로 바꾸는 게 맞음.</description>
+    <name>Day 3 · 9/2 수 · Sa Boadella · 지로나</name>
+    <description>구글맵 대중교통 기준 숙소에서 해변까지 약 1시간 40~50분. 점심 후 Lloret 버스터미널을 거쳐 지로나로 이동합니다.</description>
     <Placemark>
-      <name>1. 바르셀로나 산츠 역</name>
-      <description>오전 · -
-지로나행 열차 탑승. 숙소(프로벤사)에서 메트로/도보+메트로로 이동.</description>
-      <Point><coordinates>2.1400042,41.3790068,0</coordinates></Point>
+      <name>1. 숙소 출발</name>
+      <description>08:00 · 대중교통 약 1시간 40~50분
+구글맵에 표시되는 지하철·기차·버스 조합 이용.</description>
+      <Point><coordinates>2.1578355,41.3921707,0</coordinates></Point>
     </Placemark>
     <Placemark>
-      <name>2. 지로나 역</name>
-      <description>오전 · 도착
-구시가지까지 도보 10–15분.</description>
-      <Point><coordinates>2.8167745,41.9794651,0</coordinates></Point>
+      <name>2. Platja de sa Boadella</name>
+      <description>10:00–12:00 · 물놀이 최대 2시간
+마지막 구간은 경사진 흙길. 샤워·발 세척 후 환복.</description>
+      <Point><coordinates>2.826021,41.699261,0</coordinates></Point>
     </Placemark>
     <Placemark>
-      <name>3. 오냐르 강 · 색색 집들</name>
-      <description>오전~점심 · 30분
-지로나 대표 포토 스팟. 강변 다리에서 사진.</description>
-      <Point><coordinates>2.8243548,41.9854374,0</coordinates></Point>
+      <name>3. Cala•Mar</name>
+      <description>12:20–13:30 · 약 70분
+해변 치링기토. 전날 인스타그램으로 영업·주방·예약 가능 여부 확인.</description>
+      <Point><coordinates>2.826144,41.699209,0</coordinates></Point>
     </Placemark>
     <Placemark>
-      <name>4. 유대인 지구 (엘 카이)</name>
-      <description>오전~오후 · 45–60분
-유럽에서 잘 보존된 유대인 지구. 골목 산책.</description>
-      <Point><coordinates>2.8249,41.9858,0</coordinates></Point>
+      <name>4. Lloret de Mar 버스터미널</name>
+      <description>13:30 이후 · 해변에서 택시 권장
+Girona행 직행버스 출발시각을 사전 확인.</description>
+      <Point><coordinates>2.845045,41.700292,0</coordinates></Point>
     </Placemark>
     <Placemark>
-      <name>5. 지로나 대성당</name>
-      <description>오후 · 45–60분
-긴 계단이 포인트. 내부는 취향에 따라.</description>
+      <name>5. 지로나역</name>
+      <description>15:00–15:30 예상 · 도착
+버스 도착 후 구시가지까지 도보 약 15분.</description>
+      <Point><coordinates>2.816683,41.979383,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>6. 오냐르 강 · 에펠 다리</name>
+      <description>15:30–16:00 · 약 30분
+강변의 색색 집과 함께 보는 대표 포토 스팟.</description>
+      <Point><coordinates>2.824492,41.98448,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>7. 유대인 지구 · 구시가지</name>
+      <description>16:00–17:00 · 약 1시간
+Carrer de la Força와 중세 골목 산책.</description>
+      <Point><coordinates>2.825123,41.986015,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>8. 지로나 대성당</name>
+      <description>17:00–18:00 · 약 1시간
+긴 계단과 외관 우선. 내부 입장은 현장 상황에 따라 선택.</description>
       <Point><coordinates>2.8253485,41.9864268,0</coordinates></Point>
     </Placemark>
     <Placemark>
-      <name>6. 아랍 목욕탕</name>
-      <description>오후 · 30분
-작지만 분위기 좋음. 시간이 없으면 패스 가능.</description>
-      <Point><coordinates>2.8257024,41.9880582,0</coordinates></Point>
+      <name>9. 지로나 성벽</name>
+      <description>18:00–18:40 · 약 40분
+체력이 남을 때만 방문. 부족하면 생략.</description>
+      <Point><coordinates>2.827261,41.98677,0</coordinates></Point>
     </Placemark>
     <Placemark>
-      <name>8. 지로나 → 바르셀로나 복귀</name>
-      <description>저녁 · 열차 ~40분
-산츠 역 도착 후 숙소로.</description>
-      <Point><coordinates>2.8167745,41.9794651,0</coordinates></Point>
+      <name>10. 지로나 구시가지 저녁</name>
+      <description>19:00–20:00 · 약 1시간
+식당은 현장에서 선택. 20시대 Barcelona행 열차에 맞춰 종료.</description>
+      <Point><coordinates>2.822736,41.985026,0</coordinates></Point>
     </Placemark>
     <Placemark>
-      <name>Day 3 · 9/2 route</name>
+      <name>11. 지로나역 · 바르셀로나 복귀</name>
+      <description>20시대 · 열차 약 40~90분
+가능하면 Passeig de Gràcia 정차편 선택. 열차 사전예매 권장.</description>
+      <Point><coordinates>2.816683,41.979383,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>Day 3 · 9/2 수 route</name>
       <Style>
         <LineStyle><color>ff2a6fdb</color><width>4</width></LineStyle>
       </Style>
       <LineString>
         <tessellate>1</tessellate>
-        <coordinates>2.1400042,41.3790068,0 2.8167745,41.9794651,0 2.8243548,41.9854374,0 2.8249,41.9858,0 2.8253485,41.9864268,0 2.8257024,41.9880582,0 2.8167745,41.9794651,0</coordinates>
+        <coordinates>2.1578355,41.3921707,0 2.826021,41.699261,0 2.826144,41.699209,0 2.845045,41.700292,0 2.816683,41.979383,0 2.824492,41.98448,0 2.825123,41.986015,0 2.8253485,41.9864268,0 2.827261,41.98677,0 2.822736,41.985026,0 2.816683,41.979383,0</coordinates>
       </LineString>
     </Placemark>
   </Document>

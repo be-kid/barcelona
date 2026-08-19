@@ -1,9 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>Day 4 · 9/3 · 미정</name>
-    <description>확정 일정 없음.</description>
-
-
+    <name>Day 4 · 9/3 목 · 고딕지구 · 보른</name>
+    <description>대성당과 고딕지구, 팔라우, 보른만 묶습니다. 개선문·시우타데야까지 무리해서 확장하지 않습니다.</description>
+    <Placemark>
+      <name>1. 바르셀로나 대성당</name>
+      <description>10:30–11:30 · 약 1시간
+유료 문화관람권은 온라인 구매 가능하지만 필수는 아님.</description>
+      <Point><coordinates>2.176199,41.383962,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>2. 고딕지구 산책</name>
+      <description>11:30–12:30 · 약 1시간
+왕의 광장·산 펠립 네리 광장과 골목 산책.</description>
+      <Point><coordinates>2.175016,41.383515,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>3. Bar Cañete</name>
+      <description>13:00–14:20 · 약 80분
+예약 성공 시 방문. 실패하면 El Xampanyet으로 변경.</description>
+      <Point><coordinates>2.172857,41.379695,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>4. 팔라우 데 라 무지카</name>
+      <description>14시대 · 약 50분
+건축 투어 시간 지정 사전예매 권장.</description>
+      <Point><coordinates>2.175312,41.387575,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>5. El Xampanyet</name>
+      <description>Bar Cañete 실패 시 · 약 60분
+예약 불가. 안초비·절임류와 카바 중심의 가벼운 타파스 대안.</description>
+      <Point><coordinates>2.180867,41.385973,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>6. 보른 지구</name>
+      <description>16:00–17:30 · 약 90분
+Santa Maria del Mar·편집숍·카페를 천천히 둘러봅니다.</description>
+      <Point><coordinates>2.182086,41.384853,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>7. 숙소 휴식</name>
+      <description>18:00–19:30 · 약 90분
+저녁 전 숙소에서 쉬는 시간.</description>
+      <Point><coordinates>2.1578355,41.3921707,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>8. Bivio</name>
+      <description>20:00–22:00 · 약 2시간
+Port Vell의 지중해식 스테이크하우스. 원하는 메뉴는 예약 전 확인.</description>
+      <Point><coordinates>2.188662,41.376111,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>Day 4 · 9/3 목 route</name>
+      <Style>
+        <LineStyle><color>ff2a6fdb</color><width>4</width></LineStyle>
+      </Style>
+      <LineString>
+        <tessellate>1</tessellate>
+        <coordinates>2.176199,41.383962,0 2.175016,41.383515,0 2.172857,41.379695,0 2.175312,41.387575,0 2.180867,41.385973,0 2.182086,41.384853,0 2.1578355,41.3921707,0 2.188662,41.376111,0</coordinates>
+      </LineString>
+    </Placemark>
   </Document>
 </kml>
