@@ -379,7 +379,7 @@ body {
     transition: transform 0.25s ease;
   }
   .panel.collapsed {
-    transform: translateY(calc(100% - 3.2rem));
+    transform: translateY(100%);
   }
   .map-pane { height: 100%; }
   .map-toggle { display: inline-flex; }

@@ -240,7 +240,9 @@
   });
 
   el.toggle.addEventListener("click", () => {
-    el.panel.classList.toggle("collapsed");
+    const collapsed = el.panel.classList.toggle("collapsed");
+    el.toggle.textContent = collapsed ? "일정 보기" : "지도 보기";
+    el.toggle.setAttribute("aria-expanded", String(!collapsed));
     setTimeout(() => state.map.invalidateSize(), 280);
   });
 
