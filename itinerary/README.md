@@ -1,6 +1,6 @@
 # 바르셀로나 5박 6일
 
-Carrer de Provença 205 (에이샴플레) 숙소 기준
+Carrer de Provença 205 숙소 기준
 
 ## 날짜별 구글맵 동선
 

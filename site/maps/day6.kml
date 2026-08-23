@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>Day 6 · 9/5 · 출국</name>
-    <description>오후 출발 예정. 정확한 비행 시간은 확인 후 업데이트.</description>
+    <name>Day 6 · 9/5 토 · 여유로운 출국일</name>
+    <description>항공편이 19~20시라는 가정의 일정입니다. 실제 출발시각이 확인되면 공항 이동시간을 다시 계산합니다.</description>
     <Placemark>
-      <name>2. 바르셀로나 엘프라트 공항</name>
-      <description>오후 출발 (시각 미정) · -
-정확한 출발 시각 업데이트 예정.</description>
+      <name>1. 체크아웃 · 짐 보관</name>
+      <description>09:00 전후 · 약 20분
+정확한 체크아웃 시각과 짐 보관 가능 여부 확인.</description>
+      <Point><coordinates>2.1578355,41.3921707,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>2. 숙소 주변 브런치</name>
+      <description>09:30–11:00 · 약 90분
+당일 컨디션에 따라 가까운 카페 선택.</description>
+      <Point><coordinates>2.161255,41.392336,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>3. 마지막 쇼핑 · 산책</name>
+      <description>11:00–12:30 · 약 90분
+빠뜨린 물건만 사고 숙소에서 멀리 이동하지 않습니다.</description>
+      <Point><coordinates>2.164994,41.391657,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>4. 가벼운 점심</name>
+      <description>12:30–13:30 · 약 1시간
+항공편 시각에 따라 앞당기거나 생략.</description>
+      <Point><coordinates>2.159982,41.39202,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>5. 숙소에서 짐 회수</name>
+      <description>14:00 전후 · 약 20분
+예시 시각이며 항공편 출발시각에 맞춰 조정.</description>
+      <Point><coordinates>2.1578355,41.3921707,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>6. 바르셀로나 엘프라트 공항</name>
+      <description>항공편 3시간 전 도착 · 출국 수속
+출발시각·터미널·수하물 마감시간 확인 필요.</description>
       <Point><coordinates>2.0833,41.2974,0</coordinates></Point>
     </Placemark>
-
+    <Placemark>
+      <name>Day 6 · 9/5 토 route</name>
+      <Style>
+        <LineStyle><color>ff2a6fdb</color><width>4</width></LineStyle>
+      </Style>
+      <LineString>
+        <tessellate>1</tessellate>
+        <coordinates>2.1578355,41.3921707,0 2.161255,41.392336,0 2.164994,41.391657,0 2.159982,41.39202,0 2.1578355,41.3921707,0 2.0833,41.2974,0</coordinates>
+      </LineString>
+    </Placemark>
   </Document>
 </kml>

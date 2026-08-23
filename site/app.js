@@ -26,6 +26,21 @@
       .replace(/"/g, "&quot;");
   }
 
+  const reservationMeta = {
+    booked: { label: "예약 완료", className: "badge-booked" },
+    recommended: { label: "예약 권장", className: "badge-recommended" },
+    walk_in: { label: "워크인", className: "badge-walkin" },
+    check: { label: "확인 필요", className: "badge-check" },
+    optional: { label: "선택", className: "badge-optional" },
+    none: { label: "예약 불필요", className: "badge-none" },
+  };
+
+  function reservationBadge(status) {
+    const meta = reservationMeta[status];
+    if (!meta) return "";
+    return `<span class="badge ${meta.className}">${meta.label}</span>`;
+  }
+
   function initMap() {
     state.map = L.map("map", { zoomControl: true, scrollWheelZoom: true });
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -76,7 +91,7 @@
       const m = L.marker([p.lat, p.lng], {
         icon: placeIcon(p.order, p.locked),
       }).bindPopup(
-        `<strong>${escapeHtml(p.order)}. ${escapeHtml(p.name)}</strong>${escapeHtml(p.time || "")} · ${escapeHtml(p.duration || "")}<br/>${escapeHtml(p.note || "")}`
+        `<strong>${escapeHtml(p.order)}. ${escapeHtml(p.name)}</strong><span class="popup-status">${reservationBadge(p.reservation_status)}</span><span>${escapeHtml(p.time || "")} · ${escapeHtml(p.duration || "")}</span><br/>${escapeHtml(p.note || "")}`
       );
       m.addTo(state.layer);
       state.markers.push({ id: p.id || String(p.order), marker: m, place: p });
@@ -136,6 +151,7 @@
           .map((p) => {
             const lock = p.locked ? `<span class="badge badge-lock">고정</span>` : "";
             const opt = p.optional ? `<span class="badge badge-opt">선택</span>` : "";
+            const reservation = reservationBadge(p.reservation_status);
             const tbd =
               p.lat == null ? `<span class="badge badge-opt">미정</span>` : "";
             const pin =
@@ -147,6 +163,7 @@
           <span class="num">${p.order}</span>
           <div>
             <h3>${escapeHtml(p.name)}${lock}${opt}${tbd}</h3>
+            <div class="place-status">${reservation}</div>
             <p class="meta">${escapeHtml(p.time || "")} · ${escapeHtml(p.duration || "")}</p>
             <p class="note">${escapeHtml(p.note || "")}</p>
           </div>
@@ -202,6 +219,9 @@
 
   function selectDay(id) {
     state.dayId = id;
+    if (location.hash !== `#${id}`) {
+      history.replaceState(null, "", `#${id}`);
+    }
     renderTabs();
     renderDay();
   }
@@ -220,7 +240,9 @@
   });
 
   el.toggle.addEventListener("click", () => {
-    el.panel.classList.toggle("collapsed");
+    const collapsed = el.panel.classList.toggle("collapsed");
+    el.toggle.textContent = collapsed ? "일정 보기" : "지도 보기";
+    el.toggle.setAttribute("aria-expanded", String(!collapsed));
     setTimeout(() => state.map.invalidateSize(), 280);
   });
 
@@ -244,8 +266,11 @@
       state.data.assumptions?.companions ||
       "링크만 있으면 같이 볼 수 있어요.";
     renderStay();
-    const first = state.data.days_plan[0]?.id;
-    selectDay(first);
+    const requested = location.hash.slice(1);
+    const initial = state.data.days_plan.some((day) => day.id === requested)
+      ? requested
+      : state.data.days_plan[0]?.id;
+    selectDay(initial);
   }
 
   boot().catch((err) => {

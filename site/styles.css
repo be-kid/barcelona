@@ -10,6 +10,10 @@
   --panel-edge: rgba(15, 76, 92, 0.12);
   --lock: #0f4c5c;
   --soft: rgba(30, 111, 138, 0.08);
+  --green: #24704a;
+  --purple: #6d4aa0;
+  --amber: #9a6418;
+  --red: #a33b32;
 }
 
 * { box-sizing: border-box; }
@@ -22,7 +26,7 @@ body {
 
 .app {
   display: grid;
-  grid-template-columns: minmax(320px, 420px) 1fr;
+  grid-template-columns: minmax(380px, 480px) 1fr;
   height: 100%;
   min-height: 100dvh;
 }
@@ -106,6 +110,43 @@ body {
   background: rgba(212, 146, 58, 0.18);
   color: #9a6418;
 }
+.badge-booked {
+  background: rgba(36, 112, 74, 0.14);
+  color: var(--green);
+}
+.badge-recommended {
+  background: rgba(154, 100, 24, 0.14);
+  color: var(--amber);
+}
+.badge-walkin {
+  background: rgba(109, 74, 160, 0.12);
+  color: var(--purple);
+}
+.badge-check {
+  background: rgba(163, 59, 50, 0.12);
+  color: var(--red);
+}
+.badge-optional {
+  background: rgba(30, 111, 138, 0.1);
+  color: var(--sea);
+}
+.badge-none {
+  background: rgba(92, 102, 120, 0.1);
+  color: var(--muted);
+}
+
+.status-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.7rem 0 0.2rem;
+}
+
+.status-legend .badge,
+.place-status .badge,
+.popup-status .badge {
+  margin-left: 0;
+}
 
 .share-row {
   display: flex;
@@ -145,6 +186,7 @@ body {
   padding: 0.5rem 1.25rem 0.75rem;
   scrollbar-width: none;
   flex: 0 0 auto;
+  border-bottom: 1px solid var(--line);
 }
 .day-tabs::-webkit-scrollbar { display: none; }
 .day-tabs button {
@@ -191,12 +233,21 @@ body {
 
 .places { list-style: none; margin: 0; padding: 0; }
 .place {
+  position: relative;
   display: grid;
   grid-template-columns: 1.8rem 1fr auto;
   gap: 0.55rem;
-  padding: 0.7rem 0;
-  border-top: 1px solid var(--line);
+  padding: 0.8rem 0;
   cursor: pointer;
+}
+.place:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 0.78rem;
+  top: 2.35rem;
+  bottom: -0.15rem;
+  width: 2px;
+  background: linear-gradient(var(--line), rgba(30, 111, 138, 0.24));
 }
 .place:hover { background: rgba(30, 111, 138, 0.04); }
 .place.active-place {
@@ -223,8 +274,15 @@ body {
   font-size: 0.95rem;
   font-weight: 600;
 }
+.place-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  min-height: 1.2rem;
+  margin-top: 0.28rem;
+}
 .meta {
-  margin: 0.15rem 0 0.2rem;
+  margin: 0.25rem 0 0.2rem;
   font-size: 0.78rem;
   color: var(--muted);
 }
@@ -294,6 +352,15 @@ body {
   font-size: 0.88rem;
 }
 .leaflet-popup-content strong { display: block; margin-bottom: 0.15rem; }
+.leaflet-popup-content > span:not(.popup-status) {
+  display: inline-block;
+  margin: 0.25rem 0 0.2rem;
+  color: var(--muted);
+}
+.popup-status {
+  display: block;
+  margin: 0.2rem 0;
+}
 
 @media (max-width: 860px) {
   .app {
@@ -303,7 +370,7 @@ body {
   .panel {
     position: absolute;
     inset: auto 0 0 0;
-    max-height: 52%;
+    max-height: 58%;
     border-right: none;
     border-top: 1px solid var(--panel-edge);
     border-radius: 1rem 1rem 0 0;
@@ -312,10 +379,11 @@ body {
     transition: transform 0.25s ease;
   }
   .panel.collapsed {
-    transform: translateY(calc(100% - 3.2rem));
+    transform: translateY(100%);
   }
   .map-pane { height: 100%; }
   .map-toggle { display: inline-flex; }
   .panel-head { padding-top: 0.9rem; }
   .brand { font-size: 1.55rem; }
+  .day-tabs { padding-bottom: 0.55rem; }
 }
