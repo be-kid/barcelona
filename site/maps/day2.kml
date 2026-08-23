@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>Day 2 · 9/1 · 가우디 투어 · 사그라다 내부</name>
-    <description>07:50–13:50 가우디 투어(카사 바트요 → 카사 밀라 → 구엘공원 → 카사 비센스 → 사그라다). 오후 16:00–17:00 사그라다 내부 투어.</description>
+    <name>Day 2 · 9/1 · 가우디 투어 · 사그라다 · 그라시아 쇼핑</name>
+    <description>07:50–13:50 가우디 투어 → 산 파우 병원 → 점심 → 16:00–17:00 사그라다 파밀리아 → Passeig de Gràcia 쇼핑 → 숙소 휴식 → 근처 저녁.</description>
     <Placemark>
       <name>1. 카사 바트요</name>
       <description>07:50 투어 시작 · 투어 포함
@@ -34,10 +34,34 @@
       <Point><coordinates>2.1744,41.4036,0</coordinates></Point>
     </Placemark>
     <Placemark>
-      <name>7. 사그라다 파밀리아 내부 투어</name>
+      <name>6. 산 파우 병원</name>
+      <description>13:50 이후 · 도보
+투어 종료 후 사그라다에서 걸어 이동.</description>
+      <Point><coordinates>2.17444,41.41278,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>8. 사그라다 파밀리아</name>
       <description>16:00–17:00 · 1시간
 내부 입장 확정. 투어와 별도 예약.</description>
       <Point><coordinates>2.1744,41.4036,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>9. Passeig de Gràcia 쇼핑</name>
+      <description>17:00 이후 · 1–2시간
+메트로/도보. Zara · Massimo Dutti · Camper · Casa Batlló 외관 · Casa Amatller.</description>
+      <Point><coordinates>2.1649,41.3916,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>10. 숙소 · 휴식</name>
+      <description>쇼핑 후 · 30–60분
+짐 내려놓고 휴식.</description>
+      <Point><coordinates>2.1578355,41.3921707,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>11. 숙소 근처 저녁</name>
+      <description>저녁 · 90분
+후보: La Bodegueta Provença · Vinitus · Cerveceria Catalana · 2254 Barcelona Restaurant · Vinitus Madrid-Barcelona</description>
+      <Point><coordinates>2.1578355,41.3921707,0</coordinates></Point>
     </Placemark>
     <Placemark>
       <name>Day 2 · 9/1 route</name>
@@ -46,7 +70,7 @@
       </Style>
       <LineString>
         <tessellate>1</tessellate>
-        <coordinates>2.1649,41.3916,0 2.1619,41.3954,0 2.1527,41.4145,0 2.1507,41.4035,0 2.1744,41.4036,0 2.1744,41.4036,0</coordinates>
+        <coordinates>2.1649,41.3916,0 2.1619,41.3954,0 2.1527,41.4145,0 2.1507,41.4035,0 2.1744,41.4036,0 2.17444,41.41278,0 2.1744,41.4036,0 2.1649,41.3916,0 2.1578355,41.3921707,0 2.1578355,41.3921707,0</coordinates>
       </LineString>
     </Placemark>
   </Document>
